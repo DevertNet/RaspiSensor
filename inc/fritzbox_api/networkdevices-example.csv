@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv=content-type content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title></title>
+<link rel="stylesheet" type="text/css" href="/css/default/main.css"/>
+<link rel="stylesheet" type="text/css" href="/css/default/sso_dropdown.css"/>
+<link rel="stylesheet" type="text/css" href="/css/default/print.css" media="print"/>
+<!--[if lte IE 7]>
+<link rel="stylesheet" type="text/css" href="/css/default/ie_fix.css"/>
+<![endif]-->
+<!--[if IE]>
+<style type="text/css">
+.hide_ftp_link {display: none;}
+</style>
+<![endif]-->
+<script type="text/javascript" src="/js/jxl.js"></script>
+<script type="text/javascript" src="/js/ready.js"></script>
+<script type="text/javascript" src="/js/help.js"></script>
+<script type="text/javascript" src="/js/popup.js?lang=de"></script>
+<script type="text/javascript" src="/js/zebra.js"></script>
+<script type="text/javascript" src="/js/ajax.js"></script>
+<script type="text/javascript" src="/js/sso_dropdown.js"></script>
+<!--[if lt IE 8]>
+<script type="text/javascript" src="/js/imgbuttonfixer.js"></script>
+<![endif]-->
+<script type="text/javascript">
+
+if (window.location.search.indexOf("&popupwnd=1")!=-1) {
+ready.onReady(popup.prepareHeader);
+}
+ready.onReady(help.show);
+ready.onReady(zebra);
+</script>
+
+<script type="text/javascript">
+function checkWlanDelete(devType, wlan, deleteable, devName, active, wdsRepeater, kisi)
+{
+if (devType=='user')
+{
+if (kisi=='active')
+return confirm(jxl.sprintf('\"%1%Username%\" kann nicht gelöscht werden, da für diesen Benutzer die Kindersicherung aktiviert ist.\nDie Kindersicherung für \"%1%Username%\" wird jetzt deaktiviert.', devName));
+else
+{
+alert('Der Eintrag für diesen Benutzer wird nach dem nächsten Neustart der FRITZ!Box aus der Liste gelöscht.');
+return false;
+}
+}
+if (wdsRepeater=="1")
+{
+alert('Das gewählte Gerät ist ein WDS-Repeater und kann daher nicht gelöscht werden.');
+return false;
+}
+if (wlan=="1" && false && false)
+{
+alert('Bei aktivem MAC-Filter (WLAN-Zugang auf die bekannten WLAN-Geräte beschränken) kann das letzte WLAN-Gerät nicht entfernt werden, da das WLAN der FRITZ!Box nicht mehr nutzbar wären. Wenn Sie die WLAN-Funktionen der FRITZ!Box nicht nutzen wollen, dann deaktivieren Sie diese im Menü \"WLAN\".');
+return false;
+}
+if (true && wlan=="1" && active=="1")
+{
+alert("Ein aktives WLAN-Gerät kann bei deaktiviertem MAC-Filter (alle neuen WLAN-Geräte zulassen) nicht gelöscht werden.");
+return false;
+}
+if (deleteable=="1")
+if(!confirm(jxl.sprintf('Damit werden auch alle Einstellungen für %1%NetDevice% gelöscht.\nMöchten Sie trotzdem fortfahren?',devName)))
+return false;
+if (deleteable=="0")
+{
+alert('Das Gerät oder der Benutzer kann nicht gelöscht werden.');
+return false;
+}
+return true;
+}
+</script>
+</head>
+<body>
+<!-- pagename:/net/network_user_devices.lua-->
+<div id="main_page_all">
+<div id="intro_bar_box">
+<div id="intro_bar_left" class="oemlogo_kdg">
+<img src="/css/default/images/leer.gif" width="100%" height="70" usemap="#logo" style="border:0px;">
+<map name="logo">
+<area shape="rect" coords="30,0,135,80" href="/home/home.lua?sid=bd0ae7344e98a499">
+</map>
+</div>
+<div id="intro_bar_right"></div>
+<div id="intro_boxinfo">
+<div></div>
+</div>
+<div id="intro_back">
+<div id="intro_bar_middle"></div>
+</div>
+</div>
+<div class="clear_float"></div>
+
+<div id="sub_menu_head" >
+<span class="sm_iefix">
+<span id="sso_dropdown" class="hidelist">Angemeldet
+</span>
+<div id="sso_dropdown_list" style="display:none;">
+<p>
+<a href="/sso_editmyself.lua?sid=bd0ae7344e98a499&amp;own_password=&amp;back_to_page=/home/home.lua">Kennwort ändern
+</a>
+</p>
+<p>
+<a href="/home/home.lua?sid=bd0ae7344e98a499&amp;logout=1">Abmelden
+</a>
+</p>
+</div> | <a class="sm_link_selected sm_link_bold" href="/home/home.lua?sid=bd0ae7344e98a499"><span>FRITZ!Box</span></a> | <a class="sm_link_bold" href="/nas/?sid=bd0ae7344e98a499">FRITZ!NAS</a> | <a class="sm_link_bold" href="/myfritz/?sid=bd0ae7344e98a499">MyFRITZ!</a> | </span><div id="iconHelp"><a target="_blank" href="/help/help.lua?sid=bd0ae7344e98a499&helppage=hilfe_startseite.html"onclick="help.popup('/help/help.lua?sid=bd0ae7344e98a499&helppage=hilfe_startseite.html&hide=yes'); return false;" title="Hilfe" class="nocancel"><img alt="" src="/css/default/images/icon_hilfe.png"></a></div>
+</div>
+
+<div id="menu_content_box">
+
+<div id="menucontent">
+<div style="">
+<div class="menu_bar_left_head"></div>
+<div class="menu_bar_right_head"></div>
+<div class="menu_bar_back_head">
+<div id="MainMenuhead">
+</div>
+</div>
+</div>
+<div class="menu_body_outer">
+
+<ul>
+<li><a href="/home/home.lua?sid=bd0ae7344e98a499">Übersicht</a></li>
+<li><a href="/internet/inetstat_monitor.lua?sid=bd0ae7344e98a499">Internet</a></li>
+<li><a href="/fon_num/foncalls_list.lua?sid=bd0ae7344e98a499">Telefonie</a></li>
+<li class=" selected submenu"><a href="/net/network_user_devices.lua?sid=bd0ae7344e98a499">Heimnetz</a>
+<ul>
+<li class=" selected"><a href="/net/network_user_devices.lua?sid=bd0ae7344e98a499">Netzwerk</a></li>
+<li><a href="/usb/show_usb_devices.lua?sid=bd0ae7344e98a499">USB-Geräte</a></li>
+<li><a href="/storage/settings.lua?sid=bd0ae7344e98a499">Speicher (NAS)</a></li>
+<li><a href="/net/fritz_name.lua?sid=bd0ae7344e98a499">FRITZ!Box-Name</a></li>
+<li><a href="/net/home_auto_overview.lua?sid=bd0ae7344e98a499">Smart Home</a></li>
+</ul></li>
+<li><a href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499">WLAN</a></li>
+<li><a href="/dect/dect_list.lua?sid=bd0ae7344e98a499">DECT</a></li>
+<li><a href="/system/syslog.lua?sid=bd0ae7344e98a499">System</a></li>
+</ul>
+</div>
+<div style="position:relative;top:-21px">
+<div class="menu_bar_left_bottom"></div>
+<div class="menu_bar_right_bottom"></div>
+<div class="menu_bar_back_bottom">
+<div id="MainMenubottom">
+</div>
+</div>
+</div>
+<div class="clear_float"></div>
+<div id="MainWizardheadBox">
+<div class="small_bar_left_head"></div>
+<div class="small_bar_right_head"></div>
+<div class="small_bar_back_head"></div>
+<div id="MainWizardhead">
+
+<ul>
+<li><a href="/assis/home.lua?sid=bd0ae7344e98a499">Assistenten</a></li><li class="explain">Einrichten, Telefone, Sichern</li>
+</ul>
+</div>
+<div id="MainWizardbottom">
+<div class="small_bar_left_bottom"></div>
+<div class="small_bar_right_bottom"></div>
+<div class="small_bar_back_bottom"></div>
+</div>
+</div>
+<div class="clear_float"></div>
+<div id='MainNasheadBox'> <div class="small_bar_left_head"></div> <div class="small_bar_right_head"></div> <div class="small_bar_back_head"> <div id='MainNashead'> 
+<ul>
+<li><a href="/nas/?sid=bd0ae7344e98a499" target="_top">FRITZ!NAS</a></li><li class="explain">Daten, Musik, Bilder, Filme</li>
+</ul> </div> </div> <div class="small_bar_left_bottom"></div> <div class="small_bar_right_bottom"></div> <div class="small_bar_back_bottom"> <div id="MainNasbottom"></div> </div></div>
+<div id='MainMyFritzheadBox'> <div class="small_bar_left_head"></div> <div class="small_bar_right_head"></div> <div class="small_bar_back_head"> <div id='MainMyFritzhead'> 
+<ul>
+<li><a href="/myfritz/?sid=bd0ae7344e98a499" target="_top">MyFRITZ!</a></li><li class="explain">NAS, Anrufe, Nachrichten</li>
+</ul> </div> </div> <div class="small_bar_left_bottom"></div> <div class="small_bar_right_bottom"></div> <div class="small_bar_back_bottom"> <div id="MainMyFritzbottom"></div> </div></div>
+</div>
+
+<div id="page_content_menu_box">
+<div class="blue_bar_left_edge"></div>
+<div class="blue_bar_right_edge"></div>
+<div id="contentTitle" class="blue_bar_back">
+<h2 id="uiPageTitle">Netzwerk</h2>
+</div>
+<div id="page_content" class="page_content">
+<ul class="tabs">
+<li class="active"><a href="/net/network_user_devices.lua?sid=bd0ae7344e98a499&">Geräte und Benutzer</a></li>
+<li><a href="/net/upnp.lua?sid=bd0ae7344e98a499&">Programme</a></li>
+<li><a href="/net/network_settings.lua?sid=bd0ae7344e98a499&">Netzwerkeinstellungen</a></li>
+</ul><div class='clear_float'></div>
+
+
+<form id="main_form" method="POST" action="/net/network_user_devices.lua?sid=bd0ae7344e98a499">
+<table id="uiViewDevTable" class="OnlyHead">
+<colgroup><col width="24px"><col width="105px"><col width="85px"><col width="85px"><col width="102px"><col width="88px"><col width="40px"><col width="40px"></colgroup>
+<tr>
+<th class="iconrow"></th>
+<th>Name</th>
+<th>IP-Adresse</th><th>MAC-Adresse</th><th>Verbindung</th>
+<th>Eigenschaften</th>
+<th class="buttonrow"></th>
+<th class="buttonrow"></th>
+</tr>
+<tr><td colspan="8"><table class="zebra_reverse noborder"><colgroup><col width="24px"><col width="105px"><col width="85px"><col width="85px"><col width="102px"><col width="88px"><col width="40px"><col width="40px"></colgroup><tr ><td class='separator' colspan='7'><hr><p><span> Aktive Verbindungen </span></p></td></tr><tr><td class="iconrow led_green" title="mit FRITZ!Box verbunden, nicht im Internet"></td><td class="cut_overflow" title="Apple-TV">Apple-TV</td><td>192.168.178.22</td><td>28:CF:DA:11:07:59</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan.gif"> WLAN</a> 65 Mbit/s </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice177" name="edit" value="landevice177" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice177" name="delete" value="landevice177" title="Löschen" onclick="return checkWlanDelete('wlan','1','1','Apple-TV','1','0','auto')" disabled ><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow led_green" title="mit FRITZ!Box verbunden, nicht im Internet"></td><td class="cut_overflow" title="iPad-von-Leon">iPad-von-Leon</td><td>192.168.178.35</td><td>1C:AB:A7:C6:BC:2B</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan.gif"> WLAN</a> 65 Mbit/s </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice189" name="edit" value="landevice189" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice189" name="delete" value="landevice189" title="Löschen" onclick="return checkWlanDelete('wlan','1','1','iPad-von-Leon','1','0','auto')" disabled ><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow globe_online" title="mit FRITZ!Box verbunden, im Internet"></td><td class="cut_overflow" title="Leons-MacBook-Air">Leons-MacBook-Air</td><td>192.168.178.32</td><td>7C:D1:C3:F7:DD:1B</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan.gif"> WLAN</a> 130 Mbit/s </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice186" name="edit" value="landevice186" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice186" name="delete" value="landevice186" title="Löschen" onclick="return checkWlanDelete('wlan','1','1','Leons-MacBook-Air','1','0','auto')" disabled ><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow led_green" title="mit FRITZ!Box verbunden, nicht im Internet"></td><td class="cut_overflow" title="raspberrypi"><a target="_blank" href="http://192.168.178.34">raspberrypi</a></td><td>192.168.178.34</td><td>B8:A3:86:01:09:A3</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan.gif"> WLAN</a> 150 Mbit/s </td><td><a href='/internet/port_fw.lua?sid=bd0ae7344e98a499'>Portfreigabe</a> </td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice188" name="edit" value="landevice188" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice188" name="delete" value="landevice188" title="Löschen" onclick="return checkWlanDelete('wlan','1','1','raspberrypi','1','0','auto')" disabled ><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr></table></td></tr><tr><td colspan="8"><table class="zebra_reverse noborder"><colgroup><col width="24px"><col width="105px"><col width="85px"><col width="85px"><col width="102px"><col width="88px"><col width="40px"><col width="40px"></colgroup><tr ><td class='separator' colspan='7'><hr><p><span> Ungenutzte Verbindungen </span></p></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="Damon">Damon</td><td>192.168.178.39</td><td>54:26:96:75:D1:B5</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan00.png"> WLAN</a>  </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice191" name="edit" value="landevice191" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice191" name="delete" value="landevice191" title="Löschen" onclick="return checkWlanDelete('wlan','1','2','Damon','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="gsimarknb002">gsimarknb002</td><td>192.168.178.29</td><td>00:26:C6:C5:BA:C8</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice183" name="edit" value="landevice183" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice183" name="delete" value="landevice183" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','gsimarknb002','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="iPhone">iPhone</td><td>192.168.178.24</td><td>58:1F:AA:5C:49:9A</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice179" name="edit" value="landevice179" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice179" name="delete" value="landevice179" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','iPhone','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="iPhone-von-Leon">iPhone-von-Leon</td><td>192.168.178.21</td><td>F0:D1:A9:80:7E:FA</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan00.png"> WLAN</a>  </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice176" name="edit" value="landevice176" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice176" name="delete" value="landevice176" title="Löschen" onclick="return checkWlanDelete('wlan','1','2','iPhone-von-Leon','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="LAPTOP01-WIN7">LAPTOP01-WIN7</td><td>192.168.178.33</td><td>00:1F:3B:2B:77:17</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice187" name="edit" value="landevice187" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice187" name="delete" value="landevice187" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','LAPTOP01-WIN7','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="leons-computer">leons-computer</td><td>192.168.178.23</td><td>00:1C:B3:73:36:E8</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice178" name="edit" value="landevice178" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice178" name="delete" value="landevice178" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','leons-computer','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="PC-192-168-178-26">PC-192-168-178-26</td><td>192.168.178.26</td><td>B8:27:EB:93:C3:4E</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice181" name="edit" value="landevice181" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice181" name="delete" value="landevice181" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','PC-192-168-178-26','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="PC-192-168-178-30">PC-192-168-178-30</td><td>192.168.178.30</td><td>F8:D0:AC:64:45:15</td><td style="white-space:nowrap; "><a class="no_link" href="/wlan/wlan_settings.lua?sid=bd0ae7344e98a499"><img alt="" src="/css/default/images/clients_wlan00.png"> WLAN</a>  </td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice184" name="edit" value="landevice184" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice184" name="delete" value="landevice184" title="Löschen" onclick="return checkWlanDelete('wlan','1','2','PC-192-168-178-30','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="PC-192-168-178-31">PC-192-168-178-31</td><td>192.168.178.31</td><td>7C:D1:C3:F1:93:3B</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice185" name="edit" value="landevice185" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice185" name="delete" value="landevice185" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','PC-192-168-178-31','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="Ramona-PC">Ramona-PC</td><td>192.168.178.38</td><td>00:14:0B:41:63:6B</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice190" name="edit" value="landevice190" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice190" name="delete" value="landevice190" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','Ramona-PC','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="TechnikerNetbook">TechnikerNetbook</td><td>192.168.178.20</td><td>00:23:8B:90:CA:D1</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice175" name="edit" value="landevice175" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice175" name="delete" value="landevice175" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','TechnikerNetbook','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr><tr><td class="iconrow"></td><td class="cut_overflow" title="waq-PC">waq-PC</td><td>192.168.178.28</td><td>78:E4:00:76:E0:61</td><td style="white-space:nowrap; "></td><td></td><td class="buttonrow"><button type="submit" class="icon" id="edit_landevice182" name="edit" value="landevice182" title="Bearbeiten"><img src="/css/default/images/bearbeiten.gif" alt="Bearbeiten"/></button></td><td class="buttonrow"><button type="submit" class="icon" id="delete_landevice182" name="delete" value="landevice182" title="Löschen" onclick="return checkWlanDelete('unknown','0','2','waq-PC','0','0','auto')"><img src="/css/default/images/loeschen.gif" alt="Löschen"/></button></td></tr></table></td></tr>
+</table>
+<div >
+<hr>
+Hier können Sie Netzwerkgeräte hinzufügen, denen eine feste IP-Adresse zugewiesen werden soll und die bisher noch keinen Kontakt zur FRITZ!Box hatten.
+<div class="btn_form">
+<button type="submit" name="btn_new_device" id="btnNewDevice">Gerät hinzufügen</button>
+</div>
+</div>
+<div id="btn_form_foot">
+<button type="submit" name="btn_refresh" id="btnRefresh">Aktualisieren</button>
+<button type="button" class="hidden_help" style="display:none;" id="uiHelpBtn" onclick="help.popup('/help/help.lua?sid=bd0ae7344e98a499&helppage=hilfe_clients.html&hide=yes')">Hilfe</button>
+</div>
+</form>
+
+<p id="page_needs_js_txt" style="display:none;">
+Die Funktionen dieser Seite benötigen Javascript. Bitte aktivieren Sie Javascript in Ihrem Browser und laden Sie die Seite erneut.
+</p>
+</div>
+<div class="clear_float"></div>
+<div class="page_bottom_container">
+<div class="page_left_bottom"></div>
+<div class="page_right_bottom"></div>
+<div class="page_back_bottom" style="">
+<div id="MainPagebottom">
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="foot_menu_box">
+<a href="/system/expert.lua?sid=bd0ae7344e98a499&amp;backtopage=%2Fnet%2Fnetwork_user_devices.lua" title="Sie befinden sich in der Erweiterten Ansicht. Beim Wechsel in die Standardansicht werden einige Bereiche der FRITZ!Box-Oberfläche ausgeblendet und es werden nur noch die Einstellungen angezeigt, die für den alltäglichen Betrieb der FRITZ!Box erforderlich sind.">Ansicht: Erweitert</a> | <a href="/menus/sitemap.lua?sid=bd0ae7344e98a499" title="Inhalt" >Inhalt</a> | <a href='http://www.avm.de/fritzbox_manual.php?hardware=157&oem=kdg&language=de&country=&version=85.05.50&subversion=' target='_blank'>Handbuch</a> | <a href='http://www.avm.de/fritzbox-service-portal.php?hardware=157&oem=kdg&language=de&country=&version=85.05.50&subversion=' target='_blank'>Tipps&amp;Tricks</a> | <a href='http://www.avm.de/newsletter?hardware=157&oem=kdg&language=de&country=&version=85.05.50&subversion=' target='_blank' style='margin-right:0px;'>Newsletter</a> | <a href='http://www.avm.de' target='_blank' style='margin-right:0px;'>avm.de</a> 
+</div>
+
+</div>
+
+
+<div id='logqueries' style='clear:both; display:none;'>
+<pre><code>
+script = /net/network_user_devices.lua
+GET = 
+{
+  ["csv"] = "", 
+  ["csv_i"] = 1
+}
+POST = 
+{
+}
+QUERIES = 
+{
+  ["box:settings/expertmode/activated"] = "1", 
+  ["box:settings/hostname"] = "", 
+  ["box:settings/opmode"] = "opmode_standard", 
+  ["box:settings/upnp/activated"] = "1", 
+  ["box:settings/upnp/control_activated"] = "0", 
+  ["box:status/localtime"] = "21:18:12 17.10.2013", 
+  ["boxusers:settings/compatibility_mode"] = "1", 
+  ["boxusers:settings/own_email"] = "", 
+  ["boxusers:settings/own_password"] = "****", 
+  ["boxusers:settings/skip_auth_from_homenetwork"] = "0", 
+  ["dect:settings/enabled"] = "1", 
+  ["forwardrules:settings/exposed_host"] = "", 
+  ["forwardrules:settings/use_exposed_host"] = "0", 
+  ["interfaces:settings/lan0/dhcpserver"] = "1", 
+  ["rights:status/username"] = "@CompatMode", 
+  ["sipextra:settings/gui_readonly"] = "1", 
+  ["wlan:settings/is_macfilter_active"] = "0", 
+  ["wlan:settings/wlanlist/count"] = "7"
+}
+MQUERIES = 
+{
+  ["autouser:status/autouser/list(type,name,UID,hostname)"] = {
+  }, 
+  ["forwardrules:settings/rule/list(activated,fwip)"] = {
+    [1] = {
+      ["_node"] = "rule0", 
+      ["activated"] = "1", 
+      ["fwip"] = "192.168.178.34"
+    }
+  }, 
+  ["ipv6firewall:settings/rule/list(enabled,neighbour_name,ifaceid)"] = {
+  }, 
+  ["landevice:settings/landevice/list(name,ip,mac,UID,dhcp,wlan,ethernet,active,static_dhcp,manu_name,wakeup,deleteable,source,online,speed,wlan_UIDs,auto_wakeup,guest,url,wlan_station_type,vendorname,parentname,parentuid,ethernet_port,wlan_show_in_monitor,plc,ipv6_ifid)"] = {
+    [1] = {
+      ["UID"] = "landevice177", 
+      ["_node"] = "landevice0", 
+      ["active"] = "1", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "1", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.22", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "28:CF:DA:11:07:59", 
+      ["manu_name"] = "0", 
+      ["name"] = "Apple-TV", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1106", 
+      ["speed"] = "65", 
+      ["static_dhcp"] = "1", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlan28:CF:DA:11:07:59", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [2] = {
+      ["UID"] = "landevice191", 
+      ["_node"] = "landevice1", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.39", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "54:26:96:75:D1:B5", 
+      ["manu_name"] = "0", 
+      ["name"] = "Damon", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1006", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlan54:26:96:75:D1:B5", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [3] = {
+      ["UID"] = "landevice187", 
+      ["_node"] = "landevice2", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.33", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "00:1F:3B:2B:77:17", 
+      ["manu_name"] = "0", 
+      ["name"] = "LAPTOP01-WIN7", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [4] = {
+      ["UID"] = "landevice186", 
+      ["_node"] = "landevice3", 
+      ["active"] = "1", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "1", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.32", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "7C:D1:C3:F7:DD:1B", 
+      ["manu_name"] = "0", 
+      ["name"] = "Leons-MacBook-Air", 
+      ["online"] = "1", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1006", 
+      ["speed"] = "130", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlan7C:D1:C3:F7:DD:1B", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [5] = {
+      ["UID"] = "landevice181", 
+      ["_node"] = "landevice4", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.26", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "B8:27:EB:93:C3:4E", 
+      ["manu_name"] = "0", 
+      ["name"] = "PC-192-168-178-26", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [6] = {
+      ["UID"] = "landevice184", 
+      ["_node"] = "landevice5", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.30", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "F8:D0:AC:64:45:15", 
+      ["manu_name"] = "0", 
+      ["name"] = "PC-192-168-178-30", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1006", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "PS3", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlanF8:D0:AC:64:45:15", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [7] = {
+      ["UID"] = "landevice185", 
+      ["_node"] = "landevice6", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.31", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "7C:D1:C3:F1:93:3B", 
+      ["manu_name"] = "0", 
+      ["name"] = "PC-192-168-178-31", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [8] = {
+      ["UID"] = "landevice190", 
+      ["_node"] = "landevice7", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.38", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "00:14:0B:41:63:6B", 
+      ["manu_name"] = "0", 
+      ["name"] = "Ramona-PC", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [9] = {
+      ["UID"] = "landevice175", 
+      ["_node"] = "landevice8", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.20", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "00:23:8B:90:CA:D1", 
+      ["manu_name"] = "0", 
+      ["name"] = "TechnikerNetbook", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [10] = {
+      ["UID"] = "landevice183", 
+      ["_node"] = "landevice9", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.29", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "00:26:C6:C5:BA:C8", 
+      ["manu_name"] = "0", 
+      ["name"] = "gsimarknb002", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [11] = {
+      ["UID"] = "landevice189", 
+      ["_node"] = "landevice10", 
+      ["active"] = "1", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "1", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.35", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "1C:AB:A7:C6:BC:2B", 
+      ["manu_name"] = "0", 
+      ["name"] = "iPad-von-Leon", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1006", 
+      ["speed"] = "65", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlan1C:AB:A7:C6:BC:2B", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [12] = {
+      ["UID"] = "landevice179", 
+      ["_node"] = "landevice11", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.24", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "58:1F:AA:5C:49:9A", 
+      ["manu_name"] = "0", 
+      ["name"] = "iPhone", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [13] = {
+      ["UID"] = "landevice176", 
+      ["_node"] = "landevice12", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.21", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "F0:D1:A9:80:7E:FA", 
+      ["manu_name"] = "0", 
+      ["name"] = "iPhone-von-Leon", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1006", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlanF0:D1:A9:80:7E:FA", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [14] = {
+      ["UID"] = "landevice178", 
+      ["_node"] = "landevice13", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.23", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "00:1C:B3:73:36:E8", 
+      ["manu_name"] = "0", 
+      ["name"] = "leons-computer", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }, 
+    [15] = {
+      ["UID"] = "landevice188", 
+      ["_node"] = "landevice14", 
+      ["active"] = "1", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "1", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.34", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "B8:A3:86:01:09:A3", 
+      ["manu_name"] = "0", 
+      ["name"] = "raspberrypi", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1186", 
+      ["speed"] = "150", 
+      ["static_dhcp"] = "1", 
+      ["url"] = "http://192.168.178.34", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "1", 
+      ["wlan_UIDs"] = "wlanB8:A3:86:01:09:A3", 
+      ["wlan_show_in_monitor"] = "1", 
+      ["wlan_station_type"] = ""
+    }, 
+    [16] = {
+      ["UID"] = "landevice182", 
+      ["_node"] = "landevice15", 
+      ["active"] = "0", 
+      ["auto_wakeup"] = "0", 
+      ["deleteable"] = "2", 
+      ["dhcp"] = "1", 
+      ["ethernet"] = "0", 
+      ["ethernet_port"] = "0", 
+      ["guest"] = "0", 
+      ["ip"] = "192.168.178.28", 
+      ["ipv6_ifid"] = "", 
+      ["mac"] = "78:E4:00:76:E0:61", 
+      ["manu_name"] = "0", 
+      ["name"] = "waq-PC", 
+      ["online"] = "0", 
+      ["parentname"] = "", 
+      ["parentuid"] = "", 
+      ["plc"] = "0", 
+      ["source"] = "0x1004", 
+      ["speed"] = "0", 
+      ["static_dhcp"] = "0", 
+      ["url"] = "", 
+      ["vendorname"] = "", 
+      ["wakeup"] = "0", 
+      ["wlan"] = "0", 
+      ["wlan_UIDs"] = "", 
+      ["wlan_show_in_monitor"] = "0", 
+      ["wlan_station_type"] = ""
+    }
+  }, 
+  ["plc:settings/device/list(manufactor,usr,mac,isLocal,model,phyRateRX,phyRateTX,green,class,led,isAVM,isActive,firmwareVersion,isDefaultNMK,ethernetrate,bridgedDevices,hasFirmwareupdate,firmwareupdateVersion,canSetLEDs,canSetGreenMode,isInternal,firmwareupdate,status)"] = {
+  }, 
+  ["user:settings/user/list(type,name,UID,hostname,monday_thursday_allowed,budget_time_monday_thursday,monday_thursday_start_time,monday_thursday_end_time,friday_allowed,budget_time_friday,friday_start_time,friday_end_time,saturday_allowed,budget_time_saturday,saturday_start_time,saturday_end_time,sunday_allowed,budget_time_sunday,sunday_start_time,sunday_end_time,is_blocked)"] = {
+    [1] = {
+      ["UID"] = "user8504", 
+      ["_node"] = "user0", 
+      ["budget_time_friday"] = "0", 
+      ["budget_time_monday_thursday"] = "0", 
+      ["budget_time_saturday"] = "0", 
+      ["budget_time_sunday"] = "0", 
+      ["friday_allowed"] = "", 
+      ["friday_end_time"] = "", 
+      ["friday_start_time"] = "", 
+      ["hostname"] = "", 
+      ["is_blocked"] = "0", 
+      ["monday_thursday_allowed"] = "", 
+      ["monday_thursday_end_time"] = "", 
+      ["monday_thursday_start_time"] = "", 
+      ["name"] = "(default)", 
+      ["saturday_allowed"] = "", 
+      ["saturday_end_time"] = "", 
+      ["saturday_start_time"] = "", 
+      ["sunday_allowed"] = "", 
+      ["sunday_end_time"] = "", 
+      ["sunday_start_time"] = "", 
+      ["type"] = "3"
+    }
+  }, 
+  ["wlan:settings/wlanlist/list(hostname,mac,UID,state,rssi,quality,is_turbo,wmm_active,cipher,powersave,is_repeater,flags,mode,is_guest)"] = {
+    [1] = {
+      ["UID"] = "wlan28:CF:DA:11:07:59", 
+      ["_node"] = "wlanlist0", 
+      ["cipher"] = "3", 
+      ["flags"] = "1", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "28:CF:DA:11:07:59", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "95", 
+      ["rssi"] = "66", 
+      ["state"] = "5", 
+      ["wmm_active"] = "1"
+    }, 
+    [2] = {
+      ["UID"] = "wlan54:26:96:75:D1:B5", 
+      ["_node"] = "wlanlist1", 
+      ["cipher"] = "3", 
+      ["flags"] = "17", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "54:26:96:75:D1:B5", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "0", 
+      ["rssi"] = "0", 
+      ["state"] = "0", 
+      ["wmm_active"] = "1"
+    }, 
+    [3] = {
+      ["UID"] = "wlan7C:D1:C3:F7:DD:1B", 
+      ["_node"] = "wlanlist2", 
+      ["cipher"] = "3", 
+      ["flags"] = "1", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "7C:D1:C3:F7:DD:1B", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "83", 
+      ["rssi"] = "58", 
+      ["state"] = "5", 
+      ["wmm_active"] = "1"
+    }, 
+    [4] = {
+      ["UID"] = "wlan1C:AB:A7:C6:BC:2B", 
+      ["_node"] = "wlanlist3", 
+      ["cipher"] = "3", 
+      ["flags"] = "17", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "1C:AB:A7:C6:BC:2B", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "67", 
+      ["rssi"] = "46", 
+      ["state"] = "5", 
+      ["wmm_active"] = "1"
+    }, 
+    [5] = {
+      ["UID"] = "wlanF0:D1:A9:80:7E:FA", 
+      ["_node"] = "wlanlist4", 
+      ["cipher"] = "3", 
+      ["flags"] = "1", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "F0:D1:A9:80:7E:FA", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "0", 
+      ["rssi"] = "0", 
+      ["state"] = "0", 
+      ["wmm_active"] = "1"
+    }, 
+    [6] = {
+      ["UID"] = "wlanB8:A3:86:01:09:A3", 
+      ["_node"] = "wlanlist5", 
+      ["cipher"] = "3", 
+      ["flags"] = "17", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "B8:A3:86:01:09:A3", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "41", 
+      ["rssi"] = "28", 
+      ["state"] = "5", 
+      ["wmm_active"] = "1"
+    }, 
+    [7] = {
+      ["UID"] = "wlanF8:D0:AC:64:45:15", 
+      ["_node"] = "wlanlist6", 
+      ["cipher"] = "3", 
+      ["flags"] = "0", 
+      ["hostname"] = "", 
+      ["is_guest"] = "0", 
+      ["is_repeater"] = "0", 
+      ["is_turbo"] = "0", 
+      ["mac"] = "F8:D0:AC:64:45:15", 
+      ["mode"] = "14", 
+      ["powersave"] = "0", 
+      ["quality"] = "0", 
+      ["rssi"] = "0", 
+      ["state"] = "0", 
+      ["wmm_active"] = "0"
+    }
+  }
+}
+CONFIG = 
+{
+  ["AB_COUNT"] = 2, 
+  ["AURA"] = true, 
+  ["BETA_RELEASE"] = 0, 
+  ["BOX_FEEDBACK"] = false, 
+  ["CAPI_POTS"] = false, 
+  ["CAPI_TE"] = false, 
+  ["CONFIGD"] = true, 
+  ["DECT"] = true, 
+  ["DECT_AUDIOD"] = true, 
+  ["DECT_MONI"] = true, 
+  ["DECT_MONI_EX"] = true, 
+  ["DOCSIS"] = true, 
+  ["DSL"] = false, 
+  ["ECO"] = true, 
+  ["ECO_SYSSTAT"] = true, 
+  ["ETH_COUNT"] = 4, 
+  ["FON"] = true, 
+  ["FONQUALITY"] = true, 
+  ["GUI_IS_POWERLINE"] = false, 
+  ["GUI_IS_REPEATER"] = false, 
+  ["GUI_NEW_FAX"] = false, 
+  ["IPV6"] = true, 
+  ["KIDS"] = true, 
+  ["LABOR_DSL"] = false, 
+  ["LTE"] = false, 
+  ["MAILER"] = false, 
+  ["MAILER2"] = true, 
+  ["MANUAL_URL"] = "http://www.avm.de/fritzbox_manual.php?hardware=157&amp;oem=kdg&amp;language=de&amp;country=&amp;version=85.05.50&amp;subversion=", 
+  ["MTD_MAIL"] = true, 
+  ["MTD_RSS"] = true, 
+  ["MULTI_COUNTRY"] = false, 
+  ["MULTI_LANGUAGE"] = false, 
+  ["MYFRITZ"] = true, 
+  ["NAS"] = true, 
+  ["NEWSLETTER_URL"] = "http://www.avm.de/newsletter?hardware=157&amp;oem=kdg&amp;language=de&amp;country=&amp;version=85.05.50&amp;subversion=", 
+  ["NLR_AUDIO"] = false, 
+  ["NQOS"] = true, 
+  ["PLC_DETECTION"] = true, 
+  ["RAMDISK"] = true, 
+  ["RELEASE"] = 1, 
+  ["REMOTE_HTTPS"] = true, 
+  ["SERVICEPORTAL_URL"] = "http://www.avm.de/fritzbox-service-portal.php?hardware=157&amp;oem=kdg&amp;language=de&amp;country=&amp;version=85.05.50&amp;subversion=", 
+  ["SESSIONID"] = true, 
+  ["STOREUSRCFG"] = true, 
+  ["TIMERCONTROL"] = true, 
+  ["TR069"] = true, 
+  ["USB_GSM"] = true, 
+  ["USB_HOST"] = true, 
+  ["USB_STORAGE"] = true, 
+  ["VDSL"] = false, 
+  ["VPN"] = true, 
+  ["WEBCM_INTERPRETER"] = true, 
+  ["WLAN"] = true, 
+  ["WLAN_GUEST"] = true, 
+  ["WLAN_WDS"] = true, 
+  ["WLAN_WDS2"] = false, 
+  ["WLAN_WPS"] = true, 
+  ["country"] = "049", 
+  ["gu_type"] = "release", 
+  ["language"] = "de", 
+  ["oem"] = "kdg"
+}
+</code></pre>
+</div>
+
+</body>
+</html>
+
+
