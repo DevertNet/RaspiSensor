@@ -135,6 +135,17 @@
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->
+		
+		<div class="col-sm-9">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Letzte 24 Stunden</h3>
+				</div>
+				<div class="panel-body">
+					<div id="chart_temp_last24hours" style="width: 100%; height: 300px;"></div>
+				</div>
+			</div>
+		</div><!-- /.col-sm-4 -->
 
 		<div class="clearfix"></div>
 		  
@@ -208,7 +219,7 @@
 			</div>
 		</div><!-- /.col-sm-4 -->
 		
-		<div class="col-sm-6">
+		<div class="col-sm-6" style="display:none;">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Network Devices</h3>
@@ -221,7 +232,7 @@
 			</div>
 		</div><!-- /.col-sm-4 -->
 		
-		<div class="col-sm-6">
+		<div class="col-sm-6" style="display:none;">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Uptime Chart</h3>
@@ -274,15 +285,17 @@
 
 			var options = {
 				titlea: name, // Elefantenfu
-				chartArea: {'width': '90%', 'height': '80%'},
+				chartArea: {'width': '80%', 'height': '70%'},
                 legend: {'position': 'bottom'}
 			};
 
 			//var el = $('<div id="chart-line-'+index+'" style="width: 900px; height: 500px;"></div>');
 			//$('.charts').append( el );
-			var chart = new google.visualization.LineChart( document.getElementById( widget.id ) );
-
-			chart.draw(data, options);
+			if ($('#'+widget.id).length > 0) {
+				var chart = new google.visualization.LineChart( document.getElementById( widget.id ) );
+	
+				chart.draw(data, options);
+			}
 		};
 
 		$.each(chartsData['lineChart'], function( index, value ) {
@@ -306,9 +319,11 @@ console.log(data);
 
 			//var el = $('<div id="chart-gauge-'+index+'" style="width: 150px; height: 150px;"></div>');
 			//$('.charts').append( el );
-			var chart = new google.visualization.Gauge(document.getElementById( widget.id ));
-
-			chart.draw(data, options);
+			if ($('#'+widget.id).length > 0) {
+				var chart = new google.visualization.Gauge(document.getElementById( widget.id ));
+	
+				chart.draw(data, options);
+			}
 		};
 
 		$.each(chartsData['gaugeChart'], function( index, value ) {
