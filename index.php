@@ -293,11 +293,12 @@
 		var gaugeChart = function(index, name, chartData, widget){
 			var data = google.visualization.arrayToDataTable([
 				['Label', 'Value'],
-				[name, parseInt(chartData)]
+				[name, parseFloat(chartData)]
 			]);
+console.log(data);
 
 			var formatter = new google.visualization.NumberFormat(
-				{suffix: widget.suffix ,pattern:'#'}
+				{suffix: widget.suffix ,pattern:'#.##'}
 			);
 			formatter.format(data,1);
 			

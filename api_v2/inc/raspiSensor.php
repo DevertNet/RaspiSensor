@@ -55,19 +55,19 @@ function raspiSensorGetSensorData($mysqli, $sensorID, $days){
 			}else{
 				$out[ $dayKey ] = array(
 										"date" => date("d.m.Y", $row["date"]),
-										"dataRaw" => $row["dataRaw"],
-										"dataRefined" => $row["dataRefined"],
+										"dataRaw" => floatval($row["dataRaw"]),
+										"dataRefined" => floatval($row["dataRefined"]),
 										"dataDivider" => 1
 									   );
 			}
 		}
+		
 
 		foreach( $out as $dayKey=>$dayData ){
 			$out[ $dayKey ][ 'dataRaw' ] /= $dayData['dataDivider'];
 			$out[ $dayKey ][ 'dataRefined' ] /= $dayData['dataDivider'];
 		}
 
-		//var_dump( $out );
 
 		$result->free();
 	}
@@ -78,7 +78,7 @@ function raspiSensorGetSensorData($mysqli, $sensorID, $days){
 	foreach( $out as $dayKey=>$dayData ){
 		$finalArray[] = array(
 								$dayData["date"],
-								round($dayData["dataRefined"])
+								round($dayData["dataRefined"], 2)
 						);
 	}
 	
@@ -89,7 +89,7 @@ function raspiSensorGetSensorDataLast($mysqli, $sensorID){
 	if ($result = $mysqli->query("SELECT * FROM sensorData WHERE sensorID='".$sensorID."' ORDER BY date DESC LIMIT 1")) {
 
 		$row = $result->fetch_assoc();
-		$out = $row['dataRefined'];
+		$out = floatval($row['dataRefined']);
 		
 		$result->free();
 	}
