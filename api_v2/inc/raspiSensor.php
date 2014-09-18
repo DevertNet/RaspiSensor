@@ -10,7 +10,7 @@ function raspiSensor($mysqli){
 									 	"widget" => array("id"=>"chart_temp_last7days", "options"=>array())
 									);
 	$outArray['lineChart'][] = array( 	"name" => "Temp.", 
-									 	"data" => raspiSensorGetSensorDataLastHours($mysqli, 'temp1', 240), 
+									 	"data" => raspiSensorGetSensorDataLastHours($mysqli, 'temp1', 24), 
 									 	"widget" => array("id"=>"chart_temp_last24hours", "options"=>array())
 									);
 	$outArray['gaugeChart'][] = array( 	"name" => "Temp.", 
@@ -90,7 +90,7 @@ function raspiSensorGetSensorDataLastHours($mysqli, $sensorID, $hours){
 						);
 	}
 	
-	return $finalArray;
+	return array_reverse($finalArray);
 }
 
 function raspiSensorGetSensorDataLastDays($mysqli, $sensorID, $days){
