@@ -136,7 +136,7 @@ function raspiSensorGetSensorDataLastDays($mysqli, $sensorID, $days){
 						);
 	}
 	
-	return $finalArray;
+	return array_reverse($finalArray);
 }
 
 function raspiSensorGetSensorDataLast($mysqli, $sensorID){
