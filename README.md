@@ -17,8 +17,8 @@ In the next weeks i want to create a simple installer and better docs for everyo
 
 
 ###Screenshots
-![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/1.jpg =300x)
-![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/2.jpg =300x)
+![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/1.jpg)
+![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/2.jpg)
 
 ###Install
 1. Create a MySQL Databse and import the default table from <code>_db/tabledb.sql</code>
