@@ -23,33 +23,40 @@ In the next weeks i want to create a simple installer and better docs for everyo
 ###Install
 1. Create a MySQL Databse and import the default table from <code>_db/tabledb.sql</code>
 2. Change the mysql login/passwort in <code>api_v2/inc/raspiSensor.php</code>
-3. Change the mysql login/passwort in <code>_py/raspiSensor.py</code> on line 85-88
+3. Change the mysql login/passwort in <code>_py/config.json</code>
 4. Create a cronjob (every 5 minutes) for the looger <code>_py/sensor.py</code>
 
 
 ###Create new Sensor
-To create a new sensor edit <code>_py/sensor.py</code>
-```python
-#!/usr/bin/python
-
-//load the lib
-import raspiSensor
-
-//create instance of raspiSensor
-rs = raspiSensor.raspiSensor( ) 
-
-//create a new sensor
-//sensorID = Name of the sensor (lowercase)
-//sensorType = sensorObject (Take a look in the docs ;) ) 
-test = rs.addSensor(sensorID = 'moisture1', 
-                    sensorType = raspiSensor.sensorMCP3008( channel = 0 )
-                    )
-
-//read the value, put it in the database
-result = rs.readSensor( test )
-
-//output the result
-print result
+To create a new sensor edit <code>_py/config.json</code>
+```json
+{
+    "mysql": {
+		"host": "127.0.0.1",
+		"port": "3306",
+		"user": "root",
+		"password": "root",
+		"database": "rpi"
+	},
+	
+	"sensors": [
+		{
+			"name": "test1",
+			"type": "mcp3008",
+			"arguments": {
+					"channel": 5
+			}
+		},
+		{
+			"name": "test2",
+			"type": "ds18s20",
+			"arguments": {
+					"dirname": "10-000802292070"
+			}
+			
+		}
+	]
+}
 ```
 Now edit <code>api_v2/inc/raspiSensor.php</code>:
 ```php
