@@ -1,30 +1,38 @@
-#!/usr/bin/python
-import raspiSensor
+import json
+import os
+from raspiSensor import raspiSensor
+import sensors
 
 
-rs = raspiSensor.raspiSensor( )
+script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
-test = rs.addSensor(sensorID = 'moisture1', 
-                    sensorType = raspiSensor.sensorMCP3008( channel = 0 )
+json_data=open( os.path.join(script_dir, "config.json") )
+config = json.load(json_data)
+json_data.close()
+
+
+rs = raspiSensor( host = config['mysql']['host'],
+				 port = config['mysql']['port'],
+				 user = config['mysql']['user'],
+				 password = config['mysql']['password'],
+				 database = config['mysql']['database'] )
+
+for sensor in config['sensors']:
+	#Get the sensor class by string
+	sensorClassRaw = getattr(sensors, sensor['type'])
+	sensorClass = sensorClassRaw()
+	
+	#pass arguments to the instance of the sensor
+	for key, value in sensor['arguments'].iteritems():
+		setattr(sensorClass, key, value)
+	
+	#read the value
+	test = rs.addSensor(sensorID = sensor['name'], 
+                    sensorType = sensorClass
                     )
 
-result = rs.readSensor( test )
-print result
+	result = rs.readSensor( test )
+	print result
 
-
-
-termo = rs.addSensor(sensorID = 'temp1', 
-                    sensorType = raspiSensor.sensorDS18S20( dirname = '10-000802292070' )
-                    )
-
-result = rs.readSensor( termo )
-print result
-
-
-
-# Debug
-print "Last 10 Entrys:"
-for row in rs.last10Entrys() :
-    print row
 
 
