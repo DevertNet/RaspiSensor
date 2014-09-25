@@ -120,7 +120,7 @@
 					<h3 class="panel-title">Letzte 7 Tage</h3>
 				</div>
 				<div class="panel-body">
-					<div id="chart_temp_last7days" style="width: 100%; height: 300px;"></div>
+					<div id="chart_temp1_last7days" style="width: 100%; height: 300px;"></div>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->
@@ -131,7 +131,7 @@
 					<h3 class="panel-title">Aktuell</h3>
 				</div>
 				<div class="panel-body">
-					<div id="chart_temp_current" style="width: 100%; height: 300px;"></div>
+					<div id="chart_temp1_current" style="width: 100%; height: 300px;"></div>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->
@@ -142,7 +142,7 @@
 					<h3 class="panel-title">Letzte 24 Stunden</h3>
 				</div>
 				<div class="panel-body">
-					<div id="chart_temp_last24hours" style="width: 100%; height: 300px;"></div>
+					<div id="chart_temp1_last24hours" style="width: 100%; height: 300px;"></div>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->
@@ -164,7 +164,7 @@
 					<h3 class="panel-title">Letzte 7 Tage</h3>
 				</div>
 				<div class="panel-body">
-					<div id="chart_moisture_last7days" style="width: 100%; height: 300px;"></div>
+					<div id="chart_moisture1_last7days" style="width: 100%; height: 300px;"></div>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->
@@ -175,7 +175,7 @@
 					<h3 class="panel-title">Aktuell</h3>
 				</div>
 				<div class="panel-body">
-					<div id="chart_moisture_current" style="width: 100%; height: 300px;"></div>
+					<div id="chart_moisture1_current" style="width: 100%; height: 300px;"></div>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->

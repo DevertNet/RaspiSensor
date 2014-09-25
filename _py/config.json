@@ -1,7 +1,7 @@
 {
     "mysql": {
 		"host": "127.0.0.1",
-		"port": "3306",
+		"port": "8889",
 		"user": "root",
 		"password": "root",
 		"database": "rpi"
@@ -9,14 +9,16 @@
 	
 	"sensors": [
 		{
-			"name": "test1",
+			"name": "temp1",
+			"displayName": "Temp.",
 			"type": "mcp3008",
 			"arguments": {
-					"channel": 5
+					"channel": 0
 			}
 		},
 		{
-			"name": "test2",
+			"name": "moisture1",
+			"displayName": "Erdf.",
 			"type": "ds18s20",
 			"arguments": {
 					"dirname": "/Applications/MAMP/htdocs/git_workspace/RaspiSensor/_py/dev/temp.txt"

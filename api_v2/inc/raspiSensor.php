@@ -4,7 +4,33 @@
 
 function raspiSensor($mysqli){
 	$outArray = array();
+	global $config;
 	
+	//var_dump($config['sensors']);
+	
+	foreach($config['sensors'] as $sensor){
+		$outArray['lineChart'][] = array( 	"name" => $sensor['displayName'], 
+											"data" => raspiSensorGetSensorDataLastDays($mysqli, $sensor['name'], 7), 
+											"widget" => array("id"=>"chart_".$sensor['name']."_last7days", "options"=>array())
+										);
+		$outArray['lineChart'][] = array( 	"name" => $sensor['displayName'], 
+											"data" => raspiSensorGetSensorDataLastHours($mysqli, $sensor['name'], 24), 
+											"widget" => array("id"=>"chart_".$sensor['name']."_last24hours", "options"=>array())
+										);
+		$outArray['gaugeChart'][] = array( 	"name" => $sensor['displayName'], 
+											"data" => raspiSensorGetSensorDataLast($mysqli, $sensor['name']), 
+											"widget" => array("id"=>"chart_".$sensor['name']."_current", "suffix"=>"%", "options"=>array( "redFrom"=> 0, "redTo"=> 15,
+																												"yellowFrom"=>15, "yellowTo"=> 20,
+																												"minorTicks"=>5,
+																												"max"=> 100,
+																												"min"=> 0 
+																												))
+										 );
+	}
+	
+	//var_dump($outArray);
+	//exit;
+	/*
 	$outArray['lineChart'][] = array( 	"name" => "Temp.", 
 									 	"data" => raspiSensorGetSensorDataLastDays($mysqli, 'temp1', 7), 
 									 	"widget" => array("id"=>"chart_temp_last7days", "options"=>array())
@@ -43,6 +69,7 @@ function raspiSensor($mysqli){
 																											"min"=> 0 
 																											))
 									 );
+	*/
 	
 	return $outArray;
 }

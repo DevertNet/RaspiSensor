@@ -2,6 +2,9 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 
+$config = json_decode( file_get_contents("../_py/config.json"), true );
+
+
 if($_GET['a']=='init'){
 	
 	include ("inc/inc.mysql.php");
