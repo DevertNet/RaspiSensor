@@ -72,9 +72,17 @@ To create a new sensor edit <code>_py/config.json</code>. You can find the avaib
 
 edit <code>index.php</code>. Use the <code>name</code> from <code>config.json</code>
 ```php
-<div id="chart_test1_last7days" style="width: 100%; height: 300px;"></div>
-<div id="chart_test1_last24hours" style="width: 100%; height: 300px;"></div>
-<div id="chart_test1_current" style="width: 100%; height: 300px;"></div>
+runModul("titelModul", array("Geräte"));
+
+runModul("switchModul", array("Stehlampe", 1, 10011));
+
+runModul("chartLineModul", array("Last 24 Hours", "temp1", "24hours"));
+
+runModul("chartGaugeModul", array("Current", "temp1", "24hours"));
+
+runModul("systemInfoModul", array("System Info"));
+
+runModul("webcamModul", array("Webcam", "test.jpg"));
 ```
 
 

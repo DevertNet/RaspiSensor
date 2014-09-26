@@ -32,7 +32,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Elektrokasten</a>
+          <a class="navbar-brand" href="#">raspiSensor</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -44,32 +44,31 @@
 
     <div class="container">
       <div class="starter-template">
-<!--        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
 
-
-
-        <button type="button" class="btn btn-default">Default</button>
-        <button type="button" class="btn btn-primary">Primary</button>
-        <button type="button" class="btn btn-success">Success</button>
-        <button type="button" class="btn btn-info">Info</button>
-        <button type="button" class="btn btn-warning">Warning</button>
-        <button type="button" class="btn btn-danger">Danger</button>
-        <button type="button" class="btn btn-link">Link</button>
-
-<div class="alert alert-danger">
-        <strong>Oh snap!</strong> Change a few things up and try submitting again.
-      </div>
-      -->
  
 <?php
 
 include("inc/moduls.php");
 
-runModul("titelModul", array("four"));
+runModul("titelModul", array("Geräte"));
 
+runModul("switchModul", array("Stehlampe", 1, 10011));
+runModul("switchModul", array("Lautsprecher", 2, 10011));
+runModul("switchModul", array("Kleine Lampe", 3, 10011));
+
+
+runModul("titelModul", array("Temperatur"));
+runModul("chartLineModul", array("Last 24 Hours", "temp1", "24hours"));
+runModul("chartGaugeModul", array("Current", "temp1", "24hours"));
+runModul("chartLineModul", array("Last 7 Days", "temp1"));
+
+runModul("titelModul", array("General"));
+runModul("systemInfoModul", array("System Info"));
+runModul("webcamModul", array("Webcam", "test.jpg"));
 
 /*
+	Needed for the admin panel ;)
+
 $children  = array();
 foreach(get_declared_classes() as $class){
     if($class instanceof rsModuls) $children[] = $class;
@@ -79,190 +78,7 @@ var_dump( $children );
 */
 
 ?>
-		  
-      
-		<div class="page-header">
-			<h1>Geräte</h1>
-		</div>
-      
-		<div class="col-sm-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Stehlampe</h3>
-				</div>
-				<div class="panel-body">
-					<button type="button" data-unit="1" data-state="1" class="switchPlug btn btn-success">Einschalten</button>
-					<button type="button" data-unit="1" data-state="0" class="switchPlug btn btn-danger">Ausschalten</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Lautsprecher</h3>
-				</div>
-				<div class="panel-body">
-					<button type="button" data-unit="2" data-state="1" class="switchPlug btn btn-success">Einschalten</button>
-					<button type="button" data-unit="2" data-state="0" class="switchPlug btn btn-danger">Ausschalten</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Kleine Lampe</h3>
-				</div>
-				<div class="panel-body">
-					<button type="button" data-unit="3" data-state="1" class="switchPlug btn btn-success">Einschalten</button>
-					<button type="button" data-unit="3" data-state="0" class="switchPlug btn btn-danger">Ausschalten</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
 
-
-		<div class="clearfix"></div>
-		  
-		  
-		  
-		  
-		  
-		  
-		<div class="page-header">
-			<h1>Temperatur</h1>
-		</div>
-      
-		<div class="col-sm-9">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Letzte 7 Tage</h3>
-				</div>
-				<div class="panel-body">
-					<div id="chart_temp1_last7days" style="width: 100%; height: 300px;"></div>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Aktuell</h3>
-				</div>
-				<div class="panel-body">
-					<div id="chart_temp1_current" style="width: 100%; height: 300px;"></div>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-9">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Letzte 24 Stunden</h3>
-				</div>
-				<div class="panel-body">
-					<div id="chart_temp1_last24hours" style="width: 100%; height: 300px;"></div>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-
-		<div class="clearfix"></div>
-		  
-		  
-		  
-		  
-		  
-		
-		<div class="page-header">
-			<h1>Erdfeuchte</h1>
-		</div>
-      
-		<div class="col-sm-9">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Letzte 7 Tage</h3>
-				</div>
-				<div class="panel-body">
-					<div id="chart_moisture1_last7days" style="width: 100%; height: 300px;"></div>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Aktuell</h3>
-				</div>
-				<div class="panel-body">
-					<div id="chart_moisture1_current" style="width: 100%; height: 300px;"></div>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-
-		<div class="clearfix"></div>
-		  
-		  
-		  
-		  
-		  
-		  
-
-		<div class="page-header">
-			<h1>Allgemein</h1>
-		</div>
-
-		<div class="col-sm-6">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Webcam</h3>
-				</div>
-				<div class="panel-body">
-					Size: <span class="webcamSize">0x0</span><br /><br />
-					<img src="test.jpg" alt="Webcam Picture" class="webcamScreen img-thumbnail" /><br /><br />
-					<button type="button" class="reloadWebcam btn btn-success">Reload</button>
-					<button type="button" class="restartWebcam btn btn-warning">Restart</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-6">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">System Info</h3>
-				</div>
-				<div class="panel-body">
-					<span class="systemInfo">n/A</span><br />
-					
-					<button type="button" class="loadSystemInfo btn btn-success">Load</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-6" style="display:none;">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Network Devices</h3>
-				</div>
-				<div class="panel-body">
-					<span class="networkDevices">n/A</span><br />
-					
-					<button type="button" class="loadNetworkDevices btn btn-success">Load</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
-		
-		<div class="col-sm-6" style="display:none;">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Uptime Chart</h3>
-				</div>
-				<div class="panel-body">
-					<canvas id="canvas" width="500" height="200"></canvas>
-					<br />
-					<button type="button" class="loadUptimeChart btn btn-success">Load</button>
-				</div>
-			</div>
-		</div><!-- /.col-sm-4 -->
 
       </div>
     </div><!-- /.container -->
@@ -356,7 +172,7 @@ console.log(data);
 	});
     
 	$(".switchPlug").click(function() {	
-		$.get( "api.php", { a: "switchPlug", systemCode: '10011', unit: $(this).data('unit'), state: $(this).data('state') } )
+		$.get( "api.php", { a: "switchPlug", systemCode: $(this).data('systemcode'), unit: $(this).data('unit'), state: $(this).data('state') } )
 		.done(function( data ) {
 			//alert( "Completed" );
 		})

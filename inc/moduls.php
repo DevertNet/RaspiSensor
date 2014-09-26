@@ -10,6 +10,11 @@ class rsModuls {
     }
 }
 
-include("views/moduls/titel.php");
+//include("views/moduls/titel.php");
+
+foreach (glob("views/moduls/*.php") as $filename)
+{
+    include $filename;
+}
 
 ?>
