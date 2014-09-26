@@ -61,6 +61,25 @@
         <strong>Oh snap!</strong> Change a few things up and try submitting again.
       </div>
       -->
+ 
+<?php
+
+include("inc/moduls.php");
+
+runModul("titelModul", array("four"));
+
+
+/*
+$children  = array();
+foreach(get_declared_classes() as $class){
+    if($class instanceof rsModuls) $children[] = $class;
+}
+
+var_dump( $children );
+*/
+
+?>
+		  
       
 		<div class="page-header">
 			<h1>Geräte</h1>
