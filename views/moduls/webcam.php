@@ -1,6 +1,16 @@
 <?php
 
 class webcamModul extends rsModuls{
+	function info() {
+		return array(
+					"columnSize" => 6,
+					"arguments" => array(
+										"Titel",
+										"Image Source (test.jpg)"
+									)
+					);
+	}
+
 	function run( $titel, $source ) {
 ?>
 		<div class="col-sm-6">

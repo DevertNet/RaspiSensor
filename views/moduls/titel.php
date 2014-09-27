@@ -1,6 +1,16 @@
 <?php
 
 class titelModul extends rsModuls{
+
+	function info() {
+		return array(
+					"columnSize" => 12,
+					"arguments" => array(
+										"Titel"
+									)
+					);
+	}
+
 	function run( $titel ) {
 ?>
 <div class="clearfix"></div>

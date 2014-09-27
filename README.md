@@ -70,20 +70,9 @@ To create a new sensor edit <code>_py/config.json</code>. You can find the avaib
 }
 ```
 
-edit <code>index.php</code>. Use the <code>name</code> from <code>config.json</code>
-```php
-runModul("titelModul", array("Geräte"));
 
-runModul("switchModul", array("Stehlampe", 1, 10011));
-
-runModul("chartLineModul", array("Last 24 Hours", "temp1", "24hours"));
-
-runModul("chartGaugeModul", array("Current", "temp1", "24hours"));
-
-runModul("systemInfoModul", array("System Info"));
-
-runModul("webcamModul", array("Webcam", "test.jpg"));
-```
+###Configurate Dashboard
+Open the <code>index.php</code> with your browser and click on "Einstellungen". You can change the order with Drag&Drop.
 
 
 ###Sensor Types

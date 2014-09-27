@@ -1,6 +1,15 @@
 <?php
 
 class systemInfoModul extends rsModuls{
+	function info() {
+		return array(
+					"columnSize" => 6,
+					"arguments" => array(
+										"Titel"
+									)
+					);
+	}
+	
 	function run( $titel ) {
 ?>
 		<div class="col-sm-6">

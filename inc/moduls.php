@@ -4,6 +4,10 @@ function runModul($name, $args){
 	return call_user_func_array(array($name, "run"), $args);
 }
 
+function getModul($name, $func, $args = array()){
+	return call_user_func_array(array($name, $func), $args);
+}
+
 class rsModuls {
     function __construct() {
         echo 'hi!';

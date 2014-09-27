@@ -1,6 +1,17 @@
 <?php
 
 class switchModul extends rsModuls{
+	function info() {
+		return array(
+					"columnSize" => 4,
+					"arguments" => array(
+										"Titel",
+										"Unit",
+										"SystemCode"
+									)
+					);
+	}
+
 	function run( $titel, $unit, $systemCode ) {
 ?>
 		<div class="col-sm-4">

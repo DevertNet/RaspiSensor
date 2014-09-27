@@ -1,6 +1,16 @@
 <?php
 
 class chartGaugeModul extends rsModuls{
+	function info() {
+		return array(
+					"columnSize" => 3,
+					"arguments" => array(
+										"Titel",
+										"Sensorname"
+									)
+					);
+	}
+
 	function run( $titel, $sensorName ) {
 		$id = "chart_".$sensorName."_current";
 ?>

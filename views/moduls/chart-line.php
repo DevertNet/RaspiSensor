@@ -1,6 +1,17 @@
 <?php
 
 class chartLineModul extends rsModuls{
+	function info() {
+		return array(
+					"columnSize" => 9,
+					"arguments" => array(
+										"Titel",
+										"Sensorname",
+										"Timescale (24hours or 7days)"
+									)
+					);
+	}
+
 	function run( $titel, $sensorName, $timeScale ) {
 	
 		if($timeScale=='24hours') $id = "chart_".$sensorName."_last24hours";
