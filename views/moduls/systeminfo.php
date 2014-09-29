@@ -1,21 +1,38 @@
 <?php
 
 class systemInfoModul extends rsModuls{
-	function info() {
+	
+	function defaultInstance() {
 		return array(
 					"columnSize" => 6,
-					"arguments" => array(
-										"Titel"
-									)
+					"titel" => "Systeminfo"
 					);
 	}
 	
-	function run( $titel ) {
+	function form ( $index, $instance ) {
+		?>
+		<div class="form-group" style="padding:0px 10px;">
+			<label class="col-sm-4 control-label">ColumnSize: </label>
+			<div class="col-sm-8">
+				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][columnSize]" value="<?php echo ( $instance['columnSize'] ); ?>">
+			</div>
+		</div>
+
+		<div class="form-group" style="padding:0px 10px;">
+			<label class="col-sm-4 control-label">Titel: </label>
+			<div class="col-sm-8">
+				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][titel]" value="<?php echo ( $instance['titel'] ); ?>">
+			</div>
+		</div>
+		<?php
+	}
+	
+	function run( $instance ) {
 ?>
-		<div class="col-sm-6">
+		<div class="col-sm-<?php echo($instance['columnSize']); ?>">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title"><?php echo($titel); ?></h3>
+					<h3 class="panel-title"><?php echo( $instance['titel'] ); ?></h3>
 				</div>
 				<div class="panel-body">
 					<span class="systemInfo">n/A</span><br />

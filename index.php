@@ -69,12 +69,11 @@ if( isset($_POST['addModul']) ){
 	
 	//get argument count
 	unset($modulInfo);
-	$modulInfo = getModul($_POST['modulname'], "info");
-	if(!is_array($modulInfo['arguments'])) $modulInfo['arguments'] = array(null);
+	$defaultInstance = getModul($_POST['modulname'], "defaultInstance");
 	
 	//add modul info
 	$configModuls['moduls'][$nextindex]['modul'] = $_POST['modulname'];
-	$configModuls['moduls'][$nextindex]['data'] = array_fill(0, count($modulInfo['arguments']), null);
+	$configModuls['moduls'][$nextindex]['data'] = $defaultInstance;
 	
 	//var_dump($configModuls['moduls']);
 	
@@ -131,7 +130,7 @@ if(!is_array($configModuls)) $configModuls = array();
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Einstellungen</a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse <?php echo ( ($showModulConfig) ? "in" : "" ); ?>">
+            <div id="collapseOne" class="panel-collapse collapse <?php echo ( ($showModulConfig) ? "in" : "" ); ?> in">
                 <div class="panel-body">
                 
                 	<form method="post">
@@ -159,30 +158,28 @@ if(!is_array($configModuls)) $configModuls = array();
                 	
 	                <hr />
 
-					<form method="post">
+					<form method="post" class="form-horizontal" role="form">
 						<div class="row moduls-sortable">
 							<?php
 							foreach($configModuls['moduls'] as $index=>$data){
-								unset($modulInfo);
-								$modulInfo = getModul($data['modul'], "info");
-								if($modulInfo['columnSize'] < 1 OR $modulInfo['columnSize'] > 12) $modulInfo['columnSize'] = 12;
+									
+								if($data['data']['columnSize'] < 1 OR $data['data']['columnSize'] > 12 OR $data['data']['columnSize']=="") $data['data']['columnSize'] = 12;
+								if($data['data']['titel']=="") $data['data']['titel'] = "No Titel";
 								?>
-								<div class="col-md-<?php echo($modulInfo['columnSize']); ?>" style="float:left; margin-bottom:20px;">
-									<div class="panel panel-info" style="height:200px;">
+								<div class="col-md-<?php echo($data['data']['columnSize']); ?>" style="float:left; margin-bottom:20px;">
+									<div class="panel panel-info" style="min-height:300px;">
 										<input type="hidden" name="moduls[<?php echo ($index); ?>][modul]" value="<?php echo ($data['modul']); ?>">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<?php echo ($data['data'][0]); ?> <small>(<?php echo ($data['modul']); ?>)</small>
+												<?php echo ($data['data']['titel']); ?> <small>(<?php echo ($data['modul']); ?>)</small>
 											</h3>
 										</div>
 										<div class="panel-body">
 											<?php
-											foreach($data['data'] as $attrIndex=>$attrData){ ?>
-												<label><?php echo ($modulInfo['arguments'][$attrIndex]); ?>: </label>
-												<input type="text" name="moduls[<?php echo ($index); ?>][data][]" value="<?php echo ($attrData); ?>"><br />
-											<?php } ?>
-											<br />
+												getModul($data['modul'], "form", array($index, $data['data']));
+											?>
 											<a href="index.php?deleteModul=<?php echo ($index); ?>" class="btn btn-default">Delete</a>
+											<input type="submit" class="btn btn-success" name="updateModuls" value="Save">
 										</div>
 									</div>
 								</div>
@@ -190,7 +187,8 @@ if(!is_array($configModuls)) $configModuls = array();
 							}
 							?>
 						</div>
-					<input type="submit" class="btn btn-success" name="updateModuls" value="Save Changes">
+						
+						<input type="submit" class="btn btn-success" name="updateModuls" value="Save Changes">
 					</form>
 					
                 </div>

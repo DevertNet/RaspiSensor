@@ -1,7 +1,7 @@
 <?php
 
-function runModul($name, $args){
-	return call_user_func_array(array($name, "run"), $args);
+function runModul($name, $instance){
+	return call_user_func_array(array($name, "run"), array($instance));
 }
 
 function getModul($name, $func, $args = array()){
