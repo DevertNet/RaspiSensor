@@ -11,7 +11,7 @@ function systemInfo(){
 	$x .= $uptime.'<br />';
 	
 	$boottime = trim(shell_exec("who -b"));
-	$x .= $boottime.'<br />';
+	$x .= $boottime.'<br />'.time();
 	
 	return $x;
 }

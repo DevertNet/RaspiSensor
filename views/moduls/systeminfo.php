@@ -37,7 +37,7 @@ class systemInfoModul extends rsModuls{
 				<div class="panel-body">
 					<span class="systemInfo">n/A</span><br />
 					
-					<button type="button" class="loadSystemInfo btn btn-success">Load</button>
+					<button type="button" class="loadSystemInfo btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->

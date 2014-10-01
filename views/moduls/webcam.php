@@ -10,6 +10,27 @@ class webcamModul extends rsModuls{
 					);
 	}
 	
+	function javascript() {
+		?>
+$(".restartWebcam").click(function() {	
+	$.get( "api.php", { a: "killWebCam" } )
+	.done(function( data ) {
+		//alert( "Completed" );
+	})
+	.fail(function() {
+		alert( "error" );
+	});
+});
+
+$(".reloadWebcam").click(function() {
+	var webcamImg = $(this).parents('.panel-body').find(".webcamScreen");
+	webcamImg.attr("src", webcamImg.attr("data-orgSrc") + "?t=" + new Date().getTime());
+
+	$(".webcamSize").html(webcamImg.width()+'x'+webcamImg.height());
+});
+		<?php
+	}
+	
 	function form ( $index, $instance ) {
 		?>
 		<div class="form-group" style="padding:0px 10px;">
@@ -44,9 +65,9 @@ class webcamModul extends rsModuls{
 				</div>
 				<div class="panel-body">
 					Size: <span class="webcamSize">0x0</span><br /><br />
-					<img src="<?php echo($instance['imageSource']); ?>" alt="Webcam Picture" class="webcamScreen img-thumbnail" /><br /><br />
-					<button type="button" class="reloadWebcam btn btn-success">Reload</button>
-					<button type="button" class="restartWebcam btn btn-warning">Restart</button>
+					<img src="<?php echo($instance['imageSource']); ?>" data-orgSrc="<?php echo($instance['imageSource']); ?>" alt="Webcam Picture" class="webcamScreen img-thumbnail" /><br /><br />
+					<button type="button" class="reloadWebcam btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Reload</button>
+					<!--<button type="button" class="restartWebcam btn btn-warning">Restart</button>-->
 				</div>
 			</div>
 		</div><!-- /.col-sm-4 -->

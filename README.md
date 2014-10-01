@@ -92,3 +92,10 @@ MCP3008 (AD Converter, 8 Channels)
 }
 ```
 Replace <code>10-000802292070</code> with your sensor name. You list all connected 1-wire sensors with this command: <code>dir /sys/bus/w1/devices/</code>
+
+
+###Todo
+ * Installer
+ * Manage Sensors over Dashboard
+ * Reload-Button for Dashboard-Informations
+ * Integrate https://github.com/xkonni/raspberry-remote
