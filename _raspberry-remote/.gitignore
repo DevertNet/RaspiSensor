@@ -1,0 +1,4 @@
+send
+daemon
+*.o
+*.swp

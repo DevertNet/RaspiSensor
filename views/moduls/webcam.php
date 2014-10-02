@@ -13,7 +13,7 @@ class webcamModul extends rsModuls{
 	function javascript() {
 		?>
 $(".restartWebcam").click(function() {	
-	$.get( "api.php", { a: "killWebCam" } )
+	$.get( "api_v2/api.php", { a: "killWebCam" } )
 	.done(function( data ) {
 		//alert( "Completed" );
 	})

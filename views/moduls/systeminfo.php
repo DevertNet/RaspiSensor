@@ -43,6 +43,18 @@ class systemInfoModul extends rsModuls{
 		</div><!-- /.col-sm-4 -->
 <?php
     }
+	
+	
+		function javascript() {
+		?>
+$(".loadSystemInfo").click(function(e) {
+	e.preventDefault();
+	initApi();
+});	
+		<?php
+	}
+	
+	
 }
 
 ?>

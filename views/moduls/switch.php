@@ -58,6 +58,23 @@ class switchModul extends rsModuls{
 		</div>
 <?php
     }
+	
+	
+		function javascript() {
+		?>
+$(".switchPlug").click(function() {	
+	$.get( "api_v2/api.php", { a: "switchPlug", systemCode: $(this).data('systemcode'), unit: $(this).data('unit'), state: $(this).data('state') } )
+	.done(function( data ) {
+		//alert( "Completed" );
+	})
+	.fail(function() {
+		alert( "error" );
+	});
+});
+	<?php
+	}
+	
+	
 }
 
 ?>

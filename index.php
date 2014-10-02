@@ -43,7 +43,7 @@
           </ul>
 			
           <ul class="nav navbar-nav navbar-right">
-			<li class=""><a href="#" onclick="initApi(); return false;"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
+			<li class=""><a href="#" onclick="initApi(); return false;" style="color:green;"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -181,22 +181,6 @@ console.log(data);
 		initApi();
 		
 		$('.moduls-sortable').sortable();
-	});
-    
-	$(".switchPlug").click(function() {	
-		$.get( "api.php", { a: "switchPlug", systemCode: $(this).data('systemcode'), unit: $(this).data('unit'), state: $(this).data('state') } )
-		.done(function( data ) {
-			//alert( "Completed" );
-		})
-		.fail(function() {
-		    alert( "error" );
-		});
-	});
-	
-	
-	$(".loadSystemInfo").click(function(e) {
-		e.preventDefault();
-		initApi();
 	});	
     </script>
 	  

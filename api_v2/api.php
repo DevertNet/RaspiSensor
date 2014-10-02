@@ -24,9 +24,9 @@ if($_GET['a']=='init'){
 	echo ('ok');
 	
 }else if($_GET['a']=='switchPlug'){
-	exec ("sudo /home/pi/Desktop/gpio/raspberry-remote/send ".intval($_GET['systemCode'])." ".intval($_GET['unit'])." ".intval($_GET['state']), $out);
+	$pathRaspberryRemote = realpath(dirname(__FILE__)."/../_raspberry-remote");
+	exec ("sudo ".$pathRaspberryRemote."/send ".intval($_GET['systemCode'])." ".intval($_GET['unit'])." ".intval($_GET['state']), $out);
 	echo ('ok');	
-
 }else{
 	echo ('error');
 	
