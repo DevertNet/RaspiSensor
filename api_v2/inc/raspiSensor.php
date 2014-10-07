@@ -31,14 +31,7 @@ function raspiSensor($mysqli){
 	//var_dump($outArray);
 	//exit;
 	/*
-	$outArray['lineChart'][] = array( 	"name" => "Temp.", 
-									 	"data" => raspiSensorGetSensorDataLastDays($mysqli, 'temp1', 7), 
-									 	"widget" => array("id"=>"chart_temp_last7days", "options"=>array())
-									);
-	$outArray['lineChart'][] = array( 	"name" => "Temp.", 
-									 	"data" => raspiSensorGetSensorDataLastHours($mysqli, 'temp1', 24), 
-									 	"widget" => array("id"=>"chart_temp_last24hours", "options"=>array())
-									);
+
 	$outArray['gaugeChart'][] = array( 	"name" => "Temp.", 
 									  	"data" => raspiSensorGetSensorDataLast($mysqli, 'temp1'), 
 									  	"widget" => array("id"=>"chart_temp_current", "suffix"=>"°", "options"=>array( "redFrom"=> 0, "redTo"=> 10, "redColor"=>"#0074ff",
@@ -48,18 +41,8 @@ function raspiSensor($mysqli){
 																											"min"=> 0 
 																											))
 									 );
-	
-	
-	
-	
-	$outArray['lineChart'][] = array( 	"name" => "Erdf.", 
-									 	"data" => raspiSensorGetSensorDataLastDays($mysqli, 'moisture1', 7), 
-									 	"widget" => array("id"=>"chart_moisture_last7days", "options"=>array())
-									);
-	$outArray['lineChart'][] = array( 	"name" => "Erdf.", 
-									 	"data" => raspiSensorGetSensorDataLastHours($mysqli, 'moisture1', 24), 
-									 	"widget" => array("id"=>"chart_moisture_last24hours", "options"=>array())
-									);
+
+
 	$outArray['gaugeChart'][] = array( 	"name" => "Erdf.", 
 									  	"data" => raspiSensorGetSensorDataLast($mysqli, 'moisture1'), 
 									  	"widget" => array("id"=>"chart_moisture_current", "suffix"=>"%", "options"=>array( "redFrom"=> 0, "redTo"=> 15,

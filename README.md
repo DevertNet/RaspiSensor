@@ -25,6 +25,7 @@ Supported Sensors:
 ###Tutorials
  * MCP3008 + Moisture Sensor (http://computers.tutsplus.com/tutorials/build-a-raspberry-pi-moisture-sensor-to-monitor-your-plants--mac-52875)
  * 1-Wire Temprature Sensor (https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/hardware)
+ * Webcam with fswebcam (http://www.raspberrypi.org/documentation/usage/webcams/)
 
 
 ###Updates
@@ -103,6 +104,11 @@ MCP3008 (AD Converter, 8 Channels)
 Replace <code>10-000802292070</code> with your sensor name. You list all connected 1-wire sensors with this command: <code>dir /sys/bus/w1/devices/</code>
 
 
+###Webcam
+To display a webcam picture on the dashboard you need to save the captured image in your http-dir (e.g. <code>/var/www/test.jpg</code>). In the config of the webcamModul you must set the <code>Image Source</code> to <code>test.jpg</code> or any other URL of an webcam-image which is reachable over the internet.
+Personaly i use fswebcam to capture every 5 seconds a image of my home.
+
+
 ###Credits
 Raspberry-Remote (https://github.com/xkonni/raspberry-remote)
 RC-Switch (https://github.com/r10r/rcswitch-pi)
@@ -110,3 +116,7 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
 ###Todo
  * Installer
  * Manage Sensors over Dashboard
+ * Gauge Style Config
+ * Only output chart data which is needed
+ * Configurate how many days/hours in the chart will displayed
+ * MCP3008 - Custom math

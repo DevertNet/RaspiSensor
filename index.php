@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="ico/favicon.png">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>RaspiSensor Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -39,7 +39,8 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li class="<?php echo ($_GET['p']=="") ? "active" : "" ; ?>"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+			<li class="<?php echo ($_GET['p']=="config") ? "active" : "" ; ?>"><a href="index.php?p=config"><span class="glyphicon glyphicon-cog"></span> Config</a></li>
           </ul>
 			
           <ul class="nav navbar-nav navbar-right">
@@ -55,18 +56,28 @@
 
 <?php
 
+//get sensor config
+$config = json_decode( file_get_contents("_py/config.json"), true );
+
+//get modul config
+$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
+if(!is_array($configModuls)) $configModuls = array();
+
+
 //load moduls
 include("inc/moduls.php");
 
-//insert config
-include("views/partials/index_config.php");
+if($_GET['p']=="config"){
+	//insert config
+	include("views/partials/index_config.php");
+}else{
+	//insert/run moduls
+	$loadedModuls = array();
+	foreach($configModuls['moduls'] as $index=>$data){
+		runModul($data['modul'], $data['data']);
 
-//insert/run moduls
-$loadedModuls = array();
-foreach($configModuls['moduls'] as $index=>$data){
-	runModul($data['modul'], $data['data']);
-	
-	$loadedModuls[$data['modul']] = 'y';
+		$loadedModuls[$data['modul']] = 'y';
+	}
 }
 
 

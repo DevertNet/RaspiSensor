@@ -68,44 +68,59 @@ if(!is_array($configModuls)) $configModuls = array();
 
 
 
-
 ?>
+
+<div class="page-header">
+  <h1>Config <small>Customize your dashboard</small></h1>
+</div>
+
 <!-- Modul Config -->
-<div class="bs-example">
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Config</a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse <?php echo ( ($showModulConfig) ? "in" : "" ); ?>">
-                <div class="panel-body">
-                
-                	<form method="post">
-	                	<div class="row">
-		                	<div class="col-md-9">
-								<select name="modulname" class="form-control">
-									<?php
-										$children  = array();
-										foreach(get_declared_classes() as $class){
-										    if(is_subclass_of($class, "rsModuls")){
-											    ?>
-											    <option value="<?php echo ($class); ?>"><?php echo ($class); ?></option>
-											    <?php
-										    }
-										}
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Add Moduls</h3>
+	</div>
+	
+	<div class="panel-body">
+		<p>
+			Add a modul at the bottom of the dashboard. After you added the modul you can set it up in the "Modul Config" section.
+		</p>
+		<hr />
+		<form method="post">
+			<div class="row">
+				<div class="col-md-9">
+					<select name="modulname" class="form-control">
+						<?php
+							$children  = array();
+							foreach(get_declared_classes() as $class){
+								if(is_subclass_of($class, "rsModuls")){
 									?>
-								</select>
-		                	</div>
-		                	
-		                	<div class="col-md-3">
-		                		<input type="submit" class="btn btn-info" style="width:100%;" name="addModul" value="+ Add Modul">
-		                	</div>
-	                	</div>
-                	</form>
-                	
-	                <hr />
+									<option value="<?php echo ($class); ?>"><?php echo ($class); ?></option>
+									<?php
+								}
+							}
+						?>
+					</select>
+				</div>
+
+				<div class="col-md-3">
+					<input type="submit" class="btn btn-info" style="width:100%;" name="addModul" value="+ Add Modul">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<br />
+<hr />
+<br />   
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Modul Config</h3>
+	</div>
+	
+	<div class="panel-body">
 
 					<form method="post" class="form-horizontal" role="form">
 						<div class="row moduls-sortable">
@@ -140,9 +155,6 @@ if(!is_array($configModuls)) $configModuls = array();
 						<input type="submit" class="btn btn-success" name="updateModuls" value="Save Changes">
 					</form>
 					
-                </div>
-            </div>
-        </div>
-    </div>
+	</div>
 </div>
 <!-- Modul Config -->
