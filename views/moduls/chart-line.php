@@ -22,6 +22,25 @@ class chartLineModul extends rsModuls{
 					);
 	}
 	
+	
+	function api( $instance ) {
+		global $mysqli;
+		
+		if($instance['timeScale']=='24hours'){
+			$id = "chart_".$instance['sensorName']."_last24hours";
+			$data = raspiSensorGetSensorDataLastHours($mysqli, $instance['sensorName'], 24);
+		}else{
+			$id = "chart_".$instance['sensorName']."_last7days";
+			$data = raspiSensorGetSensorDataLastDays($mysqli, $instance['sensorName'], 7);
+		}
+		
+		return array( 	"name" => $instance['titel'], 
+						"data" => $data, 
+						"widget" => array("id"=>$id, "options"=>array())
+					);
+	}
+	
+	
 	function form ( $index, $instance ) {
 		global $config;
 		?>

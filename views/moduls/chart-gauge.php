@@ -10,6 +10,24 @@ class chartGaugeModul extends rsModuls{
 					);
 	}
 	
+	
+	function api( $instance ) {
+		global $mysqli;
+		
+		return array( 	"name" => $instance['titel'], 
+						"data" => raspiSensorGetSensorDataLast($mysqli, $instance['sensorName']), 
+						"widget" => array("id"=>"chart_".$instance['sensorName']."_current",
+										  "suffix"=>"%",
+										  "options"=>array( "redFrom"=> 0, "redTo"=> 15,
+															"yellowFrom"=>15, "yellowTo"=> 20,
+															"minorTicks"=>5,
+															"max"=> 100,
+															"min"=> 0 
+															))
+										 );
+	}
+	
+	
 	function form ( $index, $instance ) {
 		global $config;
 		?>

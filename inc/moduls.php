@@ -16,7 +16,9 @@ class rsModuls {
 
 //include("views/moduls/titel.php");
 
-foreach (glob("views/moduls/*.php") as $filename)
+$mainPath = realpath(dirname(__FILE__)."/../");
+
+foreach (glob($mainPath."/views/moduls/*.php") as $filename)
 {
     include $filename;
 }

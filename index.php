@@ -58,6 +58,7 @@
 
 //get sensor config
 $config = json_decode( file_get_contents("_py/config.json"), true );
+if(!is_array($config)) $config = array();
 
 //get modul config
 $configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
@@ -80,24 +81,6 @@ if($_GET['p']=="config"){
 	}
 }
 
-
-/*
-runModul("titelModul", array("Geräte"));
-
-runModul("switchModul", array("Stehlampe", 1, 10011));
-runModul("switchModul", array("Lautsprecher", 2, 10011));
-runModul("switchModul", array("Kleine Lampe", 3, 10011));
-
-
-runModul("titelModul", array("Temperatur"));
-runModul("chartLineModul", array("Last 24 Hours", "temp1", "24hours"));
-runModul("chartGaugeModul", array("Current", "temp1", "24hours"));
-runModul("chartLineModul", array("Last 7 Days", "temp1"));
-
-runModul("titelModul", array("General"));
-runModul("systemInfoModul", array("System Info"));
-runModul("webcamModul", array("Webcam", "test.jpg"));
-*/
 
 ?>
 
@@ -126,11 +109,22 @@ runModul("webcamModul", array("Webcam", "test.jpg"));
 						
 			drawCharts( data.raspiSensor );
 			
+			$( document ).trigger( "initApiComplete", [data] );
 		})
 		.fail(function() {
 		    alert( "error" );
 		});
 	}
+	
+	/*
+	$( document ).on( "initApiComplete", function( e, data ) {
+		console.log( "Event 1 Fired" + data.systemInfo );
+	});
+		
+	$( document ).on( "initApiComplete", function( e, data ) {
+		console.log( "Event 2 Fired" + data.systemInfo );
+	});
+	*/
 	
 		
 	function drawCharts(chartsData) {
@@ -154,7 +148,7 @@ runModul("webcamModul", array("Webcam", "test.jpg"));
 			}
 		};
 
-		$.each(chartsData['lineChart'], function( index, value ) {
+		$.each(chartsData['chartLineModul'], function( index, value ) {
 			lineChart(index, value['name'], value['data'], value['widget']);
 		});
 
@@ -182,7 +176,7 @@ console.log(data);
 			}
 		};
 
-		$.each(chartsData['gaugeChart'], function( index, value ) {
+		$.each(chartsData['chartGaugeModul'], function( index, value ) {
 			gaugeChart(index, value['name'], value['data'], value['widget']);
 		});
 	}

@@ -5,9 +5,18 @@
 function raspiSensor($mysqli){
 	$outArray = array();
 	global $config;
+	global $configModuls;
 	
-	//var_dump($config['sensors']);
+	//var_dump($configModuls['moduls']);
 	
+	foreach($configModuls['moduls'] as $modul){
+		if( method_exists( $modul['modul'], 'api' ) ){			
+			$outArray[ $modul['modul'] ][] = getModul( $modul['modul'], "api", array($modul['data']) );
+		}
+	}
+	
+	
+	/*
 	foreach($config['sensors'] as $sensor){
 		$outArray['lineChart'][] = array( 	"name" => $sensor['displayName'], 
 											"data" => raspiSensorGetSensorDataLastDays($mysqli, $sensor['name'], 7), 
@@ -27,6 +36,7 @@ function raspiSensor($mysqli){
 																												))
 										 );
 	}
+	*/
 	
 	//var_dump($outArray);
 	//exit;

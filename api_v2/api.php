@@ -2,8 +2,16 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
 
+//get sensor config
 $config = json_decode( file_get_contents("../_py/config.json"), true );
+if(!is_array($config)) $config = array();
 
+//get modul config
+$configModuls = json_decode( file_get_contents("../_py/config.moduls.json"), true );
+if(!is_array($configModuls)) $configModuls = array();
+
+//load moduls
+include("../inc/moduls.php");
 
 if($_GET['a']=='init'){
 	

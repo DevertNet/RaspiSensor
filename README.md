@@ -117,6 +117,6 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
  * Installer
  * Manage Sensors over Dashboard
  * Gauge Style Config
- * Only output chart data which is needed
  * Configurate how many days/hours in the chart will displayed
  * MCP3008 - Custom math
+ * Javascript Callback "ApiDataLoaded" + put the line chart js in the modul files
