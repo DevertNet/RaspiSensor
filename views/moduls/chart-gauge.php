@@ -79,6 +79,43 @@ class chartGaugeModul extends rsModuls{
 		</div><!-- /.col-sm-4 -->
 <?php
     }
+	
+	
+		function javascript() {
+		?>
+$( document ).on( "initApiComplete", function( e, data ) {
+	chartsData = data.raspiSensor;
+
+	var gaugeChart = function(index, name, chartData, widget){
+		var data = google.visualization.arrayToDataTable([
+			['Label', 'Value'],
+			[name, parseFloat(chartData)]
+		]);
+
+		var formatter = new google.visualization.NumberFormat(
+			{suffix: widget.suffix ,pattern:'#.##'}
+		);
+		formatter.format(data,1);
+
+		var options = widget.options;
+
+		//var el = $('<div id="chart-gauge-'+index+'" style="width: 150px; height: 150px;"></div>');
+		//$('.charts').append( el );
+		if ($('#'+widget.id).length > 0) {
+			var chart = new google.visualization.Gauge(document.getElementById( widget.id ));
+
+			chart.draw(data, options);
+		}
+	};
+
+	$.each(chartsData['chartGaugeModul'], function( index, value ) {
+		gaugeChart(index, value['name'], value['data'], value['widget']);
+	});
+});
+	<?php
+	}
+	
+	
 }
 
 ?>

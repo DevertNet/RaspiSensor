@@ -104,91 +104,29 @@ if($_GET['p']=="config"){
 	
 	function initApi(){
 		$.getJSON ( "api_v2/api.php", { a: "init" } )
-		.done(function( data ) {
-			$(".systemInfo").html( data.systemInfo );
-						
-			drawCharts( data.raspiSensor );
-			
+		.done(function( data ) {					
+			//Trigger "initApiComplete" Event
 			$( document ).trigger( "initApiComplete", [data] );
 		})
 		.fail(function() {
 		    alert( "error" );
 		});
 	}
-	
-	/*
-	$( document ).on( "initApiComplete", function( e, data ) {
-		console.log( "Event 1 Fired" + data.systemInfo );
-	});
-		
-	$( document ).on( "initApiComplete", function( e, data ) {
-		console.log( "Event 2 Fired" + data.systemInfo );
-	});
-	*/
-	
-		
-	function drawCharts(chartsData) {
-		var lineChart = function(index, name, chartData, widget){
-			chartData[0][1] = name;
-			
-			var data = google.visualization.arrayToDataTable( chartData );
-
-			var options = {
-				titlea: name, // Elefantenfu
-				chartArea: {'width': '80%', 'height': '70%'},
-                legend: {'position': 'bottom'}
-			};
-
-			//var el = $('<div id="chart-line-'+index+'" style="width: 900px; height: 500px;"></div>');
-			//$('.charts').append( el );
-			if ($('#'+widget.id).length > 0) {
-				var chart = new google.visualization.LineChart( document.getElementById( widget.id ) );
-	
-				chart.draw(data, options);
-			}
-		};
-
-		$.each(chartsData['chartLineModul'], function( index, value ) {
-			lineChart(index, value['name'], value['data'], value['widget']);
-		});
-
-
-		var gaugeChart = function(index, name, chartData, widget){
-			var data = google.visualization.arrayToDataTable([
-				['Label', 'Value'],
-				[name, parseFloat(chartData)]
-			]);
-console.log(data);
-
-			var formatter = new google.visualization.NumberFormat(
-				{suffix: widget.suffix ,pattern:'#.##'}
-			);
-			formatter.format(data,1);
-			
-			var options = widget.options;
-
-			//var el = $('<div id="chart-gauge-'+index+'" style="width: 150px; height: 150px;"></div>');
-			//$('.charts').append( el );
-			if ($('#'+widget.id).length > 0) {
-				var chart = new google.visualization.Gauge(document.getElementById( widget.id ));
-	
-				chart.draw(data, options);
-			}
-		};
-
-		$.each(chartsData['chartGaugeModul'], function( index, value ) {
-			gaugeChart(index, value['name'], value['data'], value['widget']);
-		});
-	}
-		
 		
 	$(function() {
 		initApi();
 		
 		$('.moduls-sortable').sortable();
 	});	
+		
+	/*
+	$( document ).on( "initApiComplete", function( e, data ) {
+		console.log( "Event 1 Fired" + data.systemInfo );
+	});
+	*/
     </script>
-	  
+	
+	<!-- Modul Javascript -->
 	<script>
 	<?php
 	//output javascript

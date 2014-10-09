@@ -50,7 +50,11 @@ class systemInfoModul extends rsModuls{
 $(".loadSystemInfo").click(function(e) {
 	e.preventDefault();
 	initApi();
-});	
+});
+
+$( document ).on( "initApiComplete", function( e, data ) {
+	$(".systemInfo").html( data.systemInfo );
+});
 		<?php
 	}
 	

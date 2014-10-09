@@ -9,16 +9,19 @@
 	
 	"sensors": [
 		{
-			"name": "temp1",
-			"displayName": "Temp.",
+			"name": "moisture1",
+			"displayName": "Erdf.",
 			"type": "mcp3008",
 			"arguments": {
-					"channel": 0
+					"channel": 0,
+					"minDataRaw": 0,
+					"maxDataRaw": 1023,
+					"dataRefinedInvert": 1
 			}
 		},
 		{
-			"name": "moisture1",
-			"displayName": "Erdf.",
+			"name": "temp1",
+			"displayName": "Temp.",
 			"type": "ds18s20",
 			"arguments": {
 					"dirname": "/Applications/MAMP/htdocs/git_workspace/RaspiSensor/_py/dev/temp.txt"

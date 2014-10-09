@@ -60,11 +60,14 @@ To create a new sensor edit <code>_py/config.json</code>. You can find the avaib
 	
 	"sensors": [
 		{
-			"name": "test1",
-			"displayName": "Test 1",
+			"name": "moisture1",
+			"displayName": "Erdf.",
 			"type": "mcp3008",
 			"arguments": {
-					"channel": 5
+					"channel": 0,
+					"minDataRaw": 0,
+					"maxDataRaw": 1023,
+					"dataRefinedInvert": 1
 			}
 		},
 		{
@@ -87,15 +90,27 @@ Open the <code>index.php</code> with your browser and click on "Config". You can
 
 ###Sensor Types
 MCP3008 (AD Converter, 8 Channels)
+Normaly the mcp3008 outputs a value from 0 to 1023, but some sensors have a other minimum and maximum. As example a moiture sensor has the minimum at 470 and the maximum at 1023.
+470 means the soil es very wet and 1023 is dry.
+If the sensor outputs a value of 500 (wet):
+500 / (1023/100) = 48% (wrong)
+(500-470) / ( (1023 - 470) / 100 ) = 5.42% (correct, but we need 94.58%, so we invert the result with: 100-5.42 = 94.58%)
 ```json
+"name": "moisture1",
+"displayName": "Erdf.",
 "type": "mcp3008",
 "arguments": {
-		"channel": 5
+		"channel": 0,
+		"minDataRaw": 0,
+		"maxDataRaw": 1023,
+		"dataRefinedInvert": 1
 }
 ```
 
 1-Wire Temprature Sensor (tested with DS18S20)
 ```json
+"name": "temp1",
+"displayName": "Temp.",
 "type": "ds18s20",
 "arguments": {
 		"dirname": "10-000802292070"
@@ -118,5 +133,3 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
  * Manage Sensors over Dashboard
  * Gauge Style Config
  * Configurate how many days/hours in the chart will displayed
- * MCP3008 - Custom math
- * Javascript Callback "ApiDataLoaded" + put the line chart js in the modul files
