@@ -14,7 +14,7 @@
 			"type": "mcp3008",
 			"arguments": {
 					"channel": 0,
-					"minDataRaw": 0,
+					"minDataRaw": 470,
 					"maxDataRaw": 1023,
 					"dataRefinedInvert": 1
 			}

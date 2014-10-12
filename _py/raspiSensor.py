@@ -1,7 +1,7 @@
 from __future__ import division
 
 
-raspiSensorDev = True
+raspiSensorDev = False
 
 #Imports
 if raspiSensorDev:

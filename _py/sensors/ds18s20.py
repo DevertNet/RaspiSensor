@@ -8,8 +8,8 @@ class ds18s20:
         pass
 
     def read(self):
-        path = self.dirname
-		#path = "/sys/bus/w1/devices/"+self.dirname+"/w1_slave"
+        #path = self.dirname
+        path = "/sys/bus/w1/devices/"+self.dirname+"/w1_slave"
             
         with open (path, "r") as myfile:
             data=myfile.read().replace('\n', '')
