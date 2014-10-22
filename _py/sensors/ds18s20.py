@@ -16,6 +16,6 @@ class ds18s20:
         
         regex = re.compile(ur't=([0-9]{2,6})$')
         result = re.findall(regex, data)
-        dataRaw = int(result[0])
+        dataRaw = float(result[0])
         dataRefined = round( dataRaw / 1000, 2 )
         return { "dataRaw":dataRaw, "dataRefined":dataRefined }

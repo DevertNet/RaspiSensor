@@ -43,7 +43,8 @@ For the first time i will change everything witout a comment. If you update your
 4. Change the mysql login/passwort in <code>/var/www/_py/config.json</code>
 5. Create a cronjob (every 5 minutes) for the logger <code>/var/www/_py/sensor.py</code>
 6. edit <code>sudo nano /var/www/_raspberry-remote/send.cpp</code>. On line 17 you must change the PIN number (see http://wiringpi.com/pins/)
-7. Now run this command: <code>make /var/www/_raspberry-remote/send</code>
+7. Now run this command: <code>cd /var/www/_raspberry-remote</code> then <code>make send</code>
+8. Make modul config editable: <code>sudo chmod 777 /var/www/_py/config.moduls.json</code>
 
 
 ###Create new Sensor

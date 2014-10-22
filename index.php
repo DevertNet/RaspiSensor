@@ -88,6 +88,10 @@ if($_GET['p']=="config"){
       </div>
     </div><!-- /.container -->
 
+	  
+	<div class="loadingoverlay">
+		<div class="spinner"></div>
+	</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -103,13 +107,15 @@ if($_GET['p']=="config"){
 	var defaultData = [0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	
 	function initApi(){
+		$('.loadingoverlay').fadeIn('fast');
 		$.getJSON ( "api_v2/api.php", { a: "init" } )
 		.done(function( data ) {					
 			//Trigger "initApiComplete" Event
 			$( document ).trigger( "initApiComplete", [data] );
+			$('.loadingoverlay').fadeOut('slow');
 		})
 		.fail(function() {
-		    alert( "error" );
+		    console.log( "Api loading error..." );
 		});
 	}
 		
