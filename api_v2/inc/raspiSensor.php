@@ -9,9 +9,9 @@ function raspiSensor($mysqli){
 	
 	//var_dump($configModuls['moduls']);
 	
-	foreach($configModuls['moduls'] as $modul){
+	foreach($configModuls['moduls'] as $index=>$modul){
 		if( method_exists( $modul['modul'], 'api' ) ){			
-			$outArray[ $modul['modul'] ][] = getModul( $modul['modul'], "api", array($modul['data']) );
+			$outArray[ $modul['modul'] ][] = getModul( $modul['modul'], "api", array($index, $modul['data']) );
 		}
 	}
 	

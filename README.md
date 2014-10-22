@@ -132,5 +132,4 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
 ###Todo
  * Installer
  * Manage Sensors over Dashboard
- * Gauge Style Config
  * Configurate how many days/hours in the chart will displayed

@@ -27,7 +27,7 @@ class titelModul extends rsModuls{
 		<?php
 	}
 
-	function run( $instance ) {
+	function run( $index, $instance ) {
 		?>
 		<div class="clearfix"></div>
 		<div class="page-header">

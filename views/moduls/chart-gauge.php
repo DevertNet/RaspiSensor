@@ -6,30 +6,36 @@ class chartGaugeModul extends rsModuls{
 		return array(
 					"columnSize" => 3,
 					"titel" => "Current",
-					"sensorName" => "temp1"
+					"sensorName" => "temp1",
+					"options" => '{
+    "redFrom": 0,
+    "redTo": 15,
+    "yellowFrom": 15,
+    "yellowTo": 20,
+    "minorTicks": 5,
+    "max": 100,
+    "min": 0
+}'
 					);
 	}
 	
 	
-	function api( $instance ) {
+	function api( $index, $instance ) {
 		global $mysqli;
 		
 		return array( 	"name" => $instance['titel'], 
 						"data" => raspiSensorGetSensorDataLast($mysqli, $instance['sensorName']), 
-						"widget" => array("id"=>"chart_".$instance['sensorName']."_current",
+						"widget" => array("id"=>"chart_".$instance['sensorName']."_current_".$index,
 										  "suffix"=>"%",
-										  "options"=>array( "redFrom"=> 0, "redTo"=> 15,
-															"yellowFrom"=>15, "yellowTo"=> 20,
-															"minorTicks"=>5,
-															"max"=> 100,
-															"min"=> 0 
-															))
-										 );
+										  "options"=>json_decode( $instance['options'] )
+										 )
+					);
 	}
 	
 	
-	function form ( $index, $instance ) {
+	function form ( $index, $newInstance ) {
 		global $config;
+		$instance = array_merge($this->defaultInstance(), $newInstance);
 		?>
 		<div class="form-group" style="padding:0px 10px;">
 			<label class="col-sm-4 control-label">ColumnSize: </label>
@@ -61,11 +67,18 @@ class chartGaugeModul extends rsModuls{
 			</div>
 		</div>
 
+		<div class="form-group" style="padding:0px 10px;">
+			<label class="col-sm-4 control-label">Options: </label>
+			<div class="col-sm-8">
+				<textarea class="form-control input-sm" name="moduls[<?php echo ($index); ?>][data][options]"><?php echo ( $instance['options'] ); ?></textarea>
+			</div>
+		</div>
+
 		<?php
 	}
 
-	function run( $instance ) {
-		$id = "chart_".$instance['sensorName']."_current";
+	function run( $index, $instance ) {
+		$id = "chart_".$instance['sensorName']."_current_".$index;
 ?>
 		<div class="col-sm-<?php echo($instance['columnSize']); ?>">
 			<div class="panel panel-primary">

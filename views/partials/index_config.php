@@ -131,7 +131,7 @@ if(!is_array($configModuls)) $configModuls = array();
 								if($data['data']['titel']=="") $data['data']['titel'] = "No Titel";
 								?>
 								<div class="col-md-<?php echo($data['data']['columnSize']); ?>" style="float:left; margin-bottom:20px;">
-									<div class="panel panel-info" style="min-height:300px;">
+									<div class="panel panel-info" style="min-height:320px;">
 										<input type="hidden" name="moduls[<?php echo ($index); ?>][modul]" value="<?php echo ($data['modul']); ?>">
 										<div class="panel-heading">
 											<h3 class="panel-title">
@@ -140,9 +140,11 @@ if(!is_array($configModuls)) $configModuls = array();
 										</div>
 										<div class="panel-body">
 											<?php
-												getModul($data['modul'], "form", array($index, $data['data']));
+												$modul = getModulClass( $data['modul'] );
+												$modul->form( $index, $data['data'] );
+												//getModul($data['modul'], "form", array($index, $data['data']));
 											?>
-											<a href="index.php?deleteModul=<?php echo ($index); ?>" class="btn btn-default">Delete</a>
+											<a href="index.php?p=config&deleteModul=<?php echo ($index); ?>" class="btn btn-default">Delete</a>
 											<input type="submit" class="btn btn-success" name="updateModuls" value="Save">
 										</div>
 									</div>

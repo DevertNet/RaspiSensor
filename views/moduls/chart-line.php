@@ -23,14 +23,14 @@ class chartLineModul extends rsModuls{
 	}
 	
 	
-	function api( $instance ) {
+	function api( $index, $instance ) {
 		global $mysqli;
 		
 		if($instance['timeScale']=='24hours'){
-			$id = "chart_".$instance['sensorName']."_last24hours";
+			$id = "chart_".$instance['sensorName']."_last24hours_".$index;
 			$data = raspiSensorGetSensorDataLastHours($mysqli, $instance['sensorName'], 24);
 		}else{
-			$id = "chart_".$instance['sensorName']."_last7days";
+			$id = "chart_".$instance['sensorName']."_last7days_".$index;
 			$data = raspiSensorGetSensorDataLastDays($mysqli, $instance['sensorName'], 7);
 		}
 		
@@ -88,10 +88,10 @@ class chartLineModul extends rsModuls{
 	}
 
 	
-	function run( $instance ) {
+	function run( $index, $instance ) {
 	
-		if($instance['timeScale']=='24hours') $id = "chart_".$instance['sensorName']."_last24hours";
-		else $id = "chart_".$instance['sensorName']."_last7days";
+		if($instance['timeScale']=='24hours') $id = "chart_".$instance['sensorName']."_last24hours_".$index;
+		else $id = "chart_".$instance['sensorName']."_last7days_".$index;
 ?>
 		<div class="col-sm-<?php echo($instance['columnSize']); ?>">
 			<div class="panel panel-primary">

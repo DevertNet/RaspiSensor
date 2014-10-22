@@ -56,7 +56,7 @@ $(".reloadWebcam").click(function() {
 		<?php
 	}
 
-	function run( $instance ) {
+	function run( $index, $instance ) {
 ?>
 		<div class="col-sm-<?php echo($instance['columnSize']); ?>">
 			<div class="panel panel-primary">

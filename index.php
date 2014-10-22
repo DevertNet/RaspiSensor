@@ -56,6 +56,7 @@
 
 <?php
 
+
 //get sensor config
 $config = json_decode( file_get_contents("_py/config.json"), true );
 if(!is_array($config)) $config = array();
@@ -75,7 +76,7 @@ if($_GET['p']=="config"){
 	//insert/run moduls
 	$loadedModuls = array();
 	foreach($configModuls['moduls'] as $index=>$data){
-		runModul($data['modul'], $data['data']);
+		runModul($data['modul'], $index, $data['data']);
 
 		$loadedModuls[$data['modul']] = 'y';
 	}
