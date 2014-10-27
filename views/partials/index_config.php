@@ -130,8 +130,8 @@ if(!is_array($configModuls)) $configModuls = array();
 								if($data['data']['columnSize'] < 1 OR $data['data']['columnSize'] > 12 OR $data['data']['columnSize']=="") $data['data']['columnSize'] = 12;
 								if($data['data']['titel']=="") $data['data']['titel'] = "No Titel";
 								?>
-								<div class="col-md-<?php echo($data['data']['columnSize']); ?>" style="float:left; margin-bottom:20px;">
-									<div class="panel panel-info" style="min-height:320px;">
+								<div class="col-md-<?php echo($data['data']['columnSize']); ?> col-module-config">
+									<div class="panel panel-info">
 										<input type="hidden" name="moduls[<?php echo ($index); ?>][modul]" value="<?php echo ($data['modul']); ?>">
 										<div class="panel-heading">
 											<h3 class="panel-title">
