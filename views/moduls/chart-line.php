@@ -45,21 +45,21 @@ class chartLineModul extends rsModuls{
 		global $config;
 		?>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Width of the module from 1 to 12">
 			<label class="col-sm-4 control-label">ColumnSize: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][columnSize]" value="<?php echo ( $instance['columnSize'] ); ?>">
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Displayed on the dashboard as titel">
 			<label class="col-sm-4 control-label">Titel: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][titel]" value="<?php echo ( $instance['titel'] ); ?>">
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Choose the sensor (Configured in _py/config.json)">
 			<label class="col-sm-4 control-label">Sensor: </label>
 			<div class="col-sm-8">
 				<select name="moduls[<?php echo ($index); ?>][data][sensorName]" class="form-control input-sm">
@@ -75,7 +75,7 @@ class chartLineModul extends rsModuls{
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Timescale of the displayed chart">
 			<label class="col-sm-4 control-label">Time: </label>
 			<div class="col-sm-8">
 				<select class="form-control input-sm" name="moduls[<?php echo ($index); ?>][data][timeScale]">

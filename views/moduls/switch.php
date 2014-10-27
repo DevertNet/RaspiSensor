@@ -13,28 +13,28 @@ class switchModul extends rsModuls{
 	
 	function form ( $index, $instance ) {
 		?>
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Width of the module from 1 to 12">
 			<label class="col-sm-4 control-label">ColumnSize: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][columnSize]" value="<?php echo ( $instance['columnSize'] ); ?>">
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Displayed on the dashboard as titel">
 			<label class="col-sm-4 control-label">Titel: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][titel]" value="<?php echo ( $instance['titel'] ); ?>">
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Number (1 to x) of the plug.">
 			<label class="col-sm-4 control-label">Unit: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][unit]" value="<?php echo ( $instance['unit'] ); ?>">
 			</div>
 		</div>
 
-		<div class="form-group" style="padding:0px 10px;">
+		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Systemcode of the plugs. Format: 11011">
 			<label class="col-sm-4 control-label">Systemcode: </label>
 			<div class="col-sm-8">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][systemCode]" value="<?php echo ( $instance['systemCode'] ); ?>">

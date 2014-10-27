@@ -83,7 +83,7 @@ if(!is_array($configModuls)) $configModuls = array();
 	
 	<div class="panel-body">
 		<p>
-			Add a modul at the bottom of the dashboard. After you added the modul you can set it up in the "Modul Config" section.
+			Add a modul at the bottom of the dashboard. After you added the modul you can set it up in the "Modul Config" section. You can drag&drop the modules for a custom order.
 		</p>
 		<hr />
 		<form method="post">

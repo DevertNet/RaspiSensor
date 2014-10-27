@@ -32,6 +32,10 @@ Supported Sensors:
 For the first time i will change everything witout a comment. If you update your code it is possible you must reconfigure raspiSensor.
 
 
+###Security (IMPORTANT)
+At the moment the dashboard has no login! To secure your dashboard you can use a client-cert or htaccess/htpasswd.
+
+
 ###Screenshots
 ![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/1.jpg)
 ![](https://github.com/DevertNet/RaspiSensor/blob/master/img/screenshots/2.jpg)
@@ -125,6 +129,17 @@ To display a webcam picture on the dashboard you need to save the captured image
 Personaly i use fswebcam to capture every 5 seconds a image of my home.
 
 
+###Troubleshooting
+**Webcam module doesn't display a image**
+Check your configured "Image Source" in the Dashboard Config. If your image is saved in <code>/var/www/</code> you must only use the image name e.g. <code>test.jpg</code>.
+
+**Can't save the Module Config**
+ Please make <code>/var/www/_py/config.moduls.json</code> editable ;)
+
+**Problem not solved?**
+Open a issue: https://github.com/DevertNet/RaspiSensor/issues
+
+
 ###Credits
 Raspberry-Remote (https://github.com/xkonni/raspberry-remote)
 RC-Switch (https://github.com/r10r/rcswitch-pi)
@@ -133,3 +148,4 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
  * Installer
  * Manage Sensors over Dashboard
  * Configurate how many days/hours in the chart will displayed
+ * securtiy
