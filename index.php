@@ -53,9 +53,8 @@
     </div>
 
     <div class="container">
-      <div class="starter-template">
-
-
+      <div class="starter-template">  
+		  
 <?php
 
 
@@ -123,10 +122,19 @@ if($_GET['p']=="config"){
 	}
 		
 	$(function() {
+		//init the api load
 		initApi();
 		
+		//Make the moduls sortable
 		$('.moduls-sortable').sortable();
+		
+		//Show Tooltips (e.g. in Config)
 		$('[data-toggle=tooltip]').tooltip({container: 'body'});
+		
+		//Changes in the config -> show the warning to save
+		$( ".col-module-config input, .col-module-config select" ).change(function() {
+			$('.alert').fadeIn();
+		});
 	});	
 		
 	/*

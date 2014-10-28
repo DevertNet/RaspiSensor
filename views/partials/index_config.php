@@ -115,6 +115,12 @@ if(!is_array($configModuls)) $configModuls = array();
 <hr />
 <br />   
 
+
+<div class="alert alert-sticky alert-danger" style="display:none;" role="alert">
+	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	<strong>Unsaved Changes!</strong> You have unsaved changes! Please click on the "Save Changes" Button at the bottom of the page!
+</div>
+
 <div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Modul Config</h3>
@@ -135,17 +141,42 @@ if(!is_array($configModuls)) $configModuls = array();
 										<input type="hidden" name="moduls[<?php echo ($index); ?>][modul]" value="<?php echo ($data['modul']); ?>">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<?php echo ($data['data']['titel']); ?> <small>(<?php echo ($data['modul']); ?>)</small>
+												<span class="glyphicon glyphicon-fullscreen" style="float:left;"></span>
+												<?php echo ($data['data']['titel']); ?> <br /><small>(<?php echo ($data['modul']); ?>)</small>
 											</h3>
 										</div>
 										<div class="panel-body">
-											<?php
-												$modul = getModulClass( $data['modul'] );
-												$modul->form( $index, $data['data'] );
-												//getModul($data['modul'], "form", array($index, $data['data']));
-											?>
-											<a href="index.php?p=config&deleteModul=<?php echo ($index); ?>" class="btn btn-default">Delete</a>
-											<input type="submit" class="btn btn-success" name="updateModuls" value="Save">
+											<!-- Button trigger modal -->
+											<button class="btn btn-default" data-toggle="modal" data-target="#moduleModalIndex<?php echo ($index); ?>">
+												<span class="glyphicon glyphicon-cog"></span> Edit
+											</button>
+											
+											<!-- Modal -->
+											<div class="modal fade" id="moduleModalIndex<?php echo ($index); ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+															<h4 class="modal-title" id="myModalLabel">
+																<?php echo ($data['data']['titel']); ?> <small>(<?php echo ($data['modul']); ?>)</small>
+															</h4>
+														</div>
+														<div class="modal-body">
+															<?php
+																$modul = getModulClass( $data['modul'] );
+																$modul->form( $index, $data['data'] );
+																//getModul($data['modul'], "form", array($index, $data['data']));
+															?>
+														</div>
+														<div class="modal-footer">
+															<a href="index.php?p=config&deleteModul=<?php echo ($index); ?>" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete (NO WARNING!)</a>
+															<button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<!-- <input type="submit" class="btn btn-success" name="updateModuls" value="Save"> -->
 										</div>
 									</div>
 								</div>

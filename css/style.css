@@ -9,16 +9,37 @@ body {
 
 
 /*
+	Alert
+*/
+.alert-sticky {
+	position: fixed;
+	z-index: 1;
+	width: 95%;
+	left: 2.5%;
+	/* right: 0; */
+	top: 64px;
+}
+/*
+	Alert
+*/
+
+
+
+/*
 	Config
 */
 .col-module-config {
 	float:left;
 	margin-bottom:20px;
-	min-height:320px;
+	min-height:130px;
 }
 
 .col-module-config .panel {
-	min-height:320px;
+	min-height:130px;
+}
+
+.col-module-config .panel-heading {
+	cursor: all-scroll;
 }
 
 .col-module-config .form-group {
@@ -35,7 +56,7 @@ body {
 }
 
 .ui-sortable-handle {
-	min-height: 350px;
+	min-height: 130px;
 	position: relative;
 }
 
@@ -46,7 +67,8 @@ body {
 .ui-sortable-placeholder:after {
 	content:' ';
 	width: 100%;
-	min-height: 320px;
+	min-height: 130px;
+	margin-bottom:  20px;
 	left:0;
 	top:0;
 	display: block;
