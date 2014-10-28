@@ -17,10 +17,8 @@ if($_GET['a']=='init'){
 	
 	include ("inc/inc.mysql.php");
 	include ("inc/inc.functions.php");
-	
+		
 	$out = array();
-	include ("inc/systemInfo.php");
-	$out['systemInfo'] = systemInfo();
 	
 	include ("inc/raspiSensor.php");
 	$out['raspiSensor'] = raspiSensor($mysqli);
@@ -39,7 +37,5 @@ if($_GET['a']=='init'){
 	echo ('error');
 	
 }
-//print_r($out);
 
-//echo ('<hr />');
 ?>

@@ -136,8 +136,24 @@ Check your configured "Image Source" in the Dashboard Config. If your image is s
 **Can't save the Module Config**
  Please make <code>/var/www/_py/config.moduls.json</code> editable ;)
 
+**How to style the gauge chart?**
+Take a look at this options: https://developers.google.com/chart/interactive/docs/gallery/gauge#Configuration_Options
+Put this options in a json format and save them in the "Style Options" Field.
+```json
+{
+    "redFrom": 0,
+    "redTo": 15,
+    "yellowFrom": 15,
+    "yellowTo": 20,
+    "minorTicks": 5,
+    "max": 100,
+    "min": 0
+}
+```
+
 **Problem not solved?**
 Open a issue: https://github.com/DevertNet/RaspiSensor/issues
+
 
 
 ###Credits
@@ -147,5 +163,8 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
 ###Todo
  * Installer
  * Manage Sensors over Dashboard
+ * Chart classification
+ * Dashboard Config: But each form in a Modal http://getbootstrap.com/javascript/#modals
  * Configurate how many days/hours in the chart will displayed
- * securtiy
+ * Login Module
+ * Make the Module Api nice.

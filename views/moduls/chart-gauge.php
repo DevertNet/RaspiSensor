@@ -38,22 +38,22 @@ class chartGaugeModul extends rsModuls{
 		$instance = array_merge($this->defaultInstance(), $newInstance);
 		?>
 		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Width of the module from 1 to 12">
-			<label class="col-sm-4 control-label">ColumnSize: </label>
-			<div class="col-sm-8">
+			<label class="col-sm-5 control-label">ColumnSize: </label>
+			<div class="col-sm-7">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][columnSize]" value="<?php echo ( $instance['columnSize'] ); ?>">
 			</div>
 		</div>
 
 		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Displayed on the dashboard as titel">
-			<label class="col-sm-4 control-label">Titel: </label>
-			<div class="col-sm-8">
+			<label class="col-sm-5 control-label">Titel: </label>
+			<div class="col-sm-7">
 				<input class="form-control input-sm" type="text" name="moduls[<?php echo ($index); ?>][data][titel]" value="<?php echo ( $instance['titel'] ); ?>">
 			</div>
 		</div>
 
 		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Choose the sensor (Configured in _py/config.json)">
-			<label class="col-sm-4 control-label">Sensor: </label>
-			<div class="col-sm-8">
+			<label class="col-sm-5 control-label">Sensor: </label>
+			<div class="col-sm-7">
 				<select name="moduls[<?php echo ($index); ?>][data][sensorName]" class="form-control input-sm">
 					<?php
 						$children  = array();
@@ -68,8 +68,8 @@ class chartGaugeModul extends rsModuls{
 		</div>
 
 		<div class="form-group" style="padding:0px 10px;" data-toggle="tooltip" data-placement="top" title="Style the Gauge Chart. Format JSON. See Google Gauge Docs.">
-			<label class="col-sm-4 control-label">Style Options: </label>
-			<div class="col-sm-8">
+			<label class="col-sm-5 control-label">Style Options: </label>
+			<div class="col-sm-7">
 				<textarea class="form-control input-sm" name="moduls[<?php echo ($index); ?>][data][options]"><?php echo ( $instance['options'] ); ?></textarea>
 			</div>
 		</div>

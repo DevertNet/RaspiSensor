@@ -25,8 +25,6 @@ $(".restartWebcam").click(function() {
 $(".reloadWebcam").click(function() {
 	var webcamImg = $(this).parents('.panel-body').find(".webcamScreen");
 	webcamImg.attr("src", webcamImg.attr("data-orgSrc") + "?t=" + new Date().getTime());
-
-	$(".webcamSize").html(webcamImg.width()+'x'+webcamImg.height());
 });
 		<?php
 	}
@@ -64,7 +62,6 @@ $(".reloadWebcam").click(function() {
 					<h3 class="panel-title"><?php echo($instance['titel']); ?></h3>
 				</div>
 				<div class="panel-body">
-					Size: <span class="webcamSize">0x0</span><br /><br />
 					<img src="<?php echo($instance['imageSource']); ?>" data-orgSrc="<?php echo($instance['imageSource']); ?>" alt="Webcam Picture" class="webcamScreen img-thumbnail" /><br /><br />
 					<button type="button" class="reloadWebcam btn btn-success"><span class="glyphicon glyphicon-refresh"></span> Reload</button>
 					<!--<button type="button" class="restartWebcam btn btn-warning">Restart</button>-->

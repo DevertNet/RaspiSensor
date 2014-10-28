@@ -51,8 +51,8 @@ class switchModul extends rsModuls{
 					<h3 class="panel-title"><?php echo($instance['titel']); ?></h3>
 				</div>
 				<div class="panel-body">
-					<button type="button" data-unit="<?php echo($instance['unit']); ?>" data-systemcode="<?php echo($instance['systemCode']); ?>" data-state="1" class="switchPlug btn btn-success">On</button>
-					<button type="button" data-unit="<?php echo($instance['unit']); ?>" data-systemcode="<?php echo($instance['systemCode']); ?>" data-state="0" class="switchPlug btn btn-danger">Off</button>
+					<button type="button" data-unit="<?php echo($instance['unit']); ?>" data-systemcode="<?php echo($instance['systemCode']); ?>" data-state="1" class="switchPlug btn btn-success"><span class="glyphicon glyphicon-ok"></span> On</button>
+					<button type="button" data-unit="<?php echo($instance['unit']); ?>" data-systemcode="<?php echo($instance['systemCode']); ?>" data-state="0" class="switchPlug btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Off</button>
 				</div>
 			</div>
 		</div>
