@@ -164,7 +164,7 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
  * Installer
  * Manage Sensors over Dashboard
  * Chart classification
- * Dashboard Config: But each form in a Modal http://getbootstrap.com/javascript/#modals
  * Configurate how many days/hours in the chart will displayed
  * Login Module
- * Make the Module Api nice.
+ * Make the Module Api nice. (load every module only once)
+ * MVC...

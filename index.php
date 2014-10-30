@@ -1,7 +1,7 @@
 <?php
+//Debugging
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
-
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -54,7 +54,7 @@
 
     <div class="container">
       <div class="starter-template">  
-		  
+		
 <?php
 
 
@@ -71,16 +71,11 @@ if(!is_array($configModuls)) $configModuls = array();
 include("inc/moduls.php");
 
 if($_GET['p']=="config"){
-	//insert config
+	//insert config page view
 	include("views/partials/index_config.php");
 }else{
 	//insert/run moduls
-	$loadedModuls = array();
-	foreach($configModuls['moduls'] as $index=>$data){
-		runModul($data['modul'], $index, $data['data']);
-
-		$loadedModuls[$data['modul']] = 'y';
-	}
+	include("views/partials/index_dashboard.php");
 }
 
 
@@ -147,11 +142,16 @@ if($_GET['p']=="config"){
 	<!-- Modul Javascript -->
 	<script>
 	<?php
-	//output javascript
-	foreach( $loadedModuls as $modulName=>$xx ){
-		if( method_exists($modulName, 'javascript') ){
-			getModul( $modulName, "javascript" );
-		}
+	//output javascript of the module
+	foreach($configModuls['moduls'] as $index=>$data)
+	{
+		
+		//init the class of the module
+		$module = getModulClass( $data['modul'] );
+		
+		//check if module has javascript method and output the javascript of the module
+		if( method_exists( $module, 'javascript' ) ) $module->javascript();
+		
 	}
 	?>
 	</script>

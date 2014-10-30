@@ -1,15 +1,17 @@
 <?php
+/*
+	Output the Config for the Modules
+*/
 
 
-$showModulConfig = false;
-
-//add modul
-if( isset($_POST['addModul']) ){
-	$showModulConfig = true;
+/*
+	add modul
+*/
+if( isset($_POST['addModul']) )
+{
+	//reload module config
 	$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
 	if(!is_array($configModuls)) $configModuls = array();
-	
-	//var_dump($configModuls['moduls']);
 	
 	//get new index number
 	end($configModuls['moduls']);
@@ -18,20 +20,32 @@ if( isset($_POST['addModul']) ){
 	
 	//get argument count
 	unset($modulInfo);
-	$defaultInstance = getModul($_POST['modulname'], "defaultInstance");
 	
-	//add modul info
-	$configModuls['moduls'][$nextindex]['modul'] = $_POST['modulname'];
-	$configModuls['moduls'][$nextindex]['data'] = $defaultInstance;
-	
-	//var_dump($configModuls['moduls']);
-	
-	file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
+	//check if defaultInstance exists
+	if( method_exists( $_POST['modulname'], 'defaultInstance' ) ) 
+	{
+		$modul = getModulClass( $_POST['modulname'] );
+		$defaultInstance = $modul->defaultInstance();
+
+		//add modul info
+		$configModuls['moduls'][$nextindex]['modul'] = $_POST['modulname'];
+		$configModuls['moduls'][$nextindex]['data'] = $defaultInstance;
+
+		//save the module data
+		file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
+	} 
+	else
+	{
+		print ( "DEV-ERROR: Module has no defaultInstance!" );
+	}
 }
 
-//delete modul
-if( isset($_GET['deleteModul']) AND $_GET['deleteModul'] >= 0 ){
-	$showModulConfig = true;
+/*
+	delete modul
+*/
+if( isset($_GET['deleteModul']) AND $_GET['deleteModul'] >= 0 )
+{
+	//reload module config
 	$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
 	if(!is_array($configModuls)) $configModuls = array();
 	
@@ -40,25 +54,28 @@ if( isset($_GET['deleteModul']) AND $_GET['deleteModul'] >= 0 ){
 	
 	//reindex the array
 	$reordered = array();
-	foreach($configModuls['moduls'] as $data){
+	foreach($configModuls['moduls'] as $data)
+	{
 		$reordered[] = $data;
 	}
-	
 	$configModuls['moduls'] = $reordered;
+	
+	//save the module data
 	file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
 }
 
 //save changes to config
-if( isset($_POST['updateModuls']) ){
-	$showModulConfig = true;
-	
+if( isset($_POST['updateModuls']) )
+{	
 	//reindex the array
 	$reordered = array();
-	foreach($_POST['moduls'] as $data){
+	foreach($_POST['moduls'] as $data)
+	{
 		$reordered[] = $data;
 	}
-	
 	$configModuls['moduls'] = $reordered;
+	
+	//save the module data
 	file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
 }
 
@@ -92,8 +109,10 @@ if(!is_array($configModuls)) $configModuls = array();
 					<select name="modulname" class="form-control">
 						<?php
 							$children  = array();
-							foreach(get_declared_classes() as $class){
-								if(is_subclass_of($class, "rsModuls")){
+							foreach(get_declared_classes() as $class)
+							{
+								if(is_subclass_of($class, "rsModuls"))
+								{
 									?>
 									<option value="<?php echo ($class); ?>"><?php echo ($class); ?></option>
 									<?php
@@ -165,7 +184,6 @@ if(!is_array($configModuls)) $configModuls = array();
 															<?php
 																$modul = getModulClass( $data['modul'] );
 																$modul->form( $index, $data['data'] );
-																//getModul($data['modul'], "form", array($index, $data['data']));
 															?>
 														</div>
 														<div class="modal-footer">
