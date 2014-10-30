@@ -1,11 +1,13 @@
 <?PHP
 
 function res($var){
+	global $mysqli;
+
 	if (get_magic_quotes_gpc()){ 
 		$var = stripslashes($var); 
 	}
 
-	if ($escaped = @mysql_real_escape_string($var)){
+	if ($escaped = @mysqli_real_escape_string($mysqli, $var)){
 		return($escaped);
 	}else{
 		return(FALSE); 
