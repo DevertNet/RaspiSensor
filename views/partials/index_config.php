@@ -9,10 +9,6 @@
 */
 if( isset($_POST['addModul']) )
 {
-	//reload module config
-	$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
-	if(!is_array($configModuls)) $configModuls = array();
-	
 	//get new index number
 	end($configModuls['moduls']);
 	$last = key($configModuls['moduls']);
@@ -32,7 +28,7 @@ if( isset($_POST['addModul']) )
 		$configModuls['moduls'][$nextindex]['data'] = $defaultInstance;
 
 		//save the module data
-		file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
+		saveConfigModuls();
 	} 
 	else
 	{
@@ -44,44 +40,23 @@ if( isset($_POST['addModul']) )
 	delete modul
 */
 if( isset($_GET['deleteModul']) AND $_GET['deleteModul'] >= 0 )
-{
-	//reload module config
-	$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
-	if(!is_array($configModuls)) $configModuls = array();
-	
+{	
 	//delete
 	unset( $configModuls['moduls'][$_GET['deleteModul']] );
-	
-	//reindex the array
-	$reordered = array();
-	foreach($configModuls['moduls'] as $data)
-	{
-		$reordered[] = $data;
-	}
-	$configModuls['moduls'] = $reordered;
-	
+		
 	//save the module data
-	file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
+	saveConfigModuls();
 }
 
 //save changes to config
 if( isset($_POST['updateModuls']) )
 {	
-	//reindex the array
-	$reordered = array();
-	foreach($_POST['moduls'] as $data)
-	{
-		$reordered[] = $data;
-	}
-	$configModuls['moduls'] = $reordered;
+	$configModuls['moduls'] = $_POST['moduls'];
 	
 	//save the module data
-	file_put_contents("_py/config.moduls.json", json_encode( $configModuls ));
+	saveConfigModuls();
 }
 
-//get config
-$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
-if(!is_array($configModuls)) $configModuls = array();
 
 
 
@@ -182,8 +157,7 @@ if(!is_array($configModuls)) $configModuls = array();
 														</div>
 														<div class="modal-body">
 															<?php
-																$modul = getModulClass( $data['modul'] );
-																$modul->form( $index, $data['data'] );
+																$data['class']->form( $index, $data['data'] );
 															?>
 														</div>
 														<div class="modal-footer">

@@ -12,11 +12,8 @@ function raspiSensor($mysqli)
 	{
 		if( method_exists( $data['modul'], 'api' ) )
 		{
-			//init the class of the module
-			$module = getModulClass( $data['modul'] );
-
 			//put the module data in array
-			$outArray[ $data['modul'] ][] = $module->api( $index, $data['data'] );
+			$outArray[ $data['modul'] ][] = $data['class']->api( $index, $data['data'] );
 		}
 	}
 	

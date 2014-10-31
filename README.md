@@ -166,5 +166,4 @@ RC-Switch (https://github.com/r10r/rcswitch-pi)
  * Chart classification
  * Configurate how many days/hours in the chart will displayed
  * Login Module
- * Make the Module Api nice. (load every module only once)
  * MVC...

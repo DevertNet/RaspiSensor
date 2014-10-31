@@ -58,14 +58,8 @@
 <?php
 
 
-//get sensor config
-$config = json_decode( file_get_contents("_py/config.json"), true );
-if(!is_array($config)) $config = array();
-
-//get modul config
-$configModuls = json_decode( file_get_contents("_py/config.moduls.json"), true );
-if(!is_array($configModuls)) $configModuls = array();
-
+//load config
+include("inc/config_loader.php");
 
 //load moduls
 include("inc/moduls.php");
@@ -144,14 +138,9 @@ if($_GET['p']=="config"){
 	<?php
 	//output javascript of the module
 	foreach($configModuls['moduls'] as $index=>$data)
-	{
-		
-		//init the class of the module
-		$module = getModulClass( $data['modul'] );
-		
+	{		
 		//check if module has javascript method and output the javascript of the module
-		if( method_exists( $module, 'javascript' ) ) $module->javascript();
-		
+		if( method_exists( $data['class'], 'javascript' ) ) $data['class']->javascript();
 	}
 	?>
 	</script>
