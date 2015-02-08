@@ -46,7 +46,7 @@ class switchModul extends rsModuls{
 	function run( $index, $instance ) {
 ?>
 		<div class="col-sm-<?php echo($instance['columnSize']); ?>">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary overall">
 				<div class="panel-heading">
 					<h3 class="panel-title"><?php echo($instance['titel']); ?></h3>
 				</div>
